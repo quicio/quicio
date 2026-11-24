@@ -20,16 +20,16 @@ colors:
   dark-faint: "#8D897F"
 typography:
   display:
-    fontFamily: "Instrument Serif, Iowan Old Style, Palatino, Georgia, serif"
+    fontFamily: "Fraunces Variable, Fraunces, Iowan Old Style, Palatino, Georgia, serif"
     fontSize: "clamp(3.4rem, 8vw, 7rem)"
     fontWeight: 400
     lineHeight: 0.8
     letterSpacing: "-0.018em"
   wordmark:
-    fontFamily: "Instrument Serif, Iowan Old Style, Palatino, Georgia, serif"
-    fontSize: "clamp(4.4rem, 1.8rem + 11.2vw, 13rem)"
+    fontFamily: "Fraunces Variable, Fraunces, Iowan Old Style, Palatino, Georgia, serif"
+    fontSize: "clamp(4.5rem, min(12.5vw, 17vh), 11rem)"
     fontWeight: 400
-    lineHeight: 0.76
+    lineHeight: 0.78
     letterSpacing: "-0.032em"
   body:
     fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
@@ -103,7 +103,7 @@ La identidad se organiza alrededor de la palabra **quicio**: la hoja de una puer
 
 ## Logo
 
-El logotipo es tipográfico: **Quicio** en Instrument Serif, con tracking negativo y una altura de línea que lo vuelve casi una inscripción. Se acompaña de un **isotipo de eje y arcos**: una línea vertical, dos arcos que se abren desde un punto de pivote y un punto ocre en el centro.
+El logotipo es tipográfico: **Quicio** en Fraunces, con tracking negativo y una altura de línea que lo vuelve casi una inscripción. Se acompaña de un **isotipo de eje y arcos**: una línea vertical, dos arcos que se abren desde un punto de pivote y un punto ocre en el centro.
 
 - **Lockup horizontal:** isotipo + wordmark + filete + descriptor «Estudio independiente» en mono.
 - **Lockup apilado:** isotipo, wordmark y descriptor en columna. Se usa en el footer.
@@ -142,15 +142,15 @@ La paleta se lee como papel, tinta y una señal.
 
 ## Tipografía
 
-| Rol                | Familia                     | Uso                                      | Pesos           |
-| ------------------ | --------------------------- | ---------------------------------------- | --------------- |
-| Display y firma    | **Instrument Serif**        | Titulares, wordmark, citas, descriptores | 400, 400 italic |
-| Lectura e interfaz | **Archivo Variable**        | Cuerpo, navegación, controles, párrafos  | 100–900         |
-| Metadatos          | **JetBrains Mono Variable** | Índices, estados, coordenadas, etiquetas | 100–800         |
+| Rol                | Familia                     | Uso                                      | Pesos                    |
+| ------------------ | --------------------------- | ---------------------------------------- | ------------------------ |
+| Display y firma    | **Fraunces Variable**       | Titulares, wordmark, citas, descriptores | 100–900 + ejes SOFT/WONK |
+| Lectura e interfaz | **Archivo Variable**        | Cuerpo, navegación, controles, párrafos  | 100–900                  |
+| Metadatos          | **JetBrains Mono Variable** | Índices, estados, coordenadas, etiquetas | 100–800                  |
 
 **Por qué estas familias**
 
-Se evaluaron Fraunces, Instrument Serif, Inter y JetBrains Mono. Instrument Serif conserva el contraste alto y la calidez del wordmark de referencia, pero tiene una sola weight y obliga a componer con escala, no con negritas. Archivo aporta una grotesca editorial con más carácter que Inter y mejor lectura en cuerpos pequeños; reemplaza a Inter en la implementación final. JetBrains Mono sostiene la capa de medición y estados.
+Se evaluaron Geliant, Imperator, Fraunces y Archivo. **Geliant** es una demo de uso personal y **Imperator** no declara una licencia de uso web; ninguna se puede publicar sin autorización, así que se descartaron del build. **Fraunces** (SIL OFL) conserva el contraste alto y el gesto del wordmark de referencia, y sus ejes `SOFT` y `WONK` permiten acercarse a la serif expresiva sin depender de una licencia dudosa. **Archivo** aporta una grotesca editorial para lectura e interfaz. JetBrains Mono sostiene la capa de medición y estados.
 
 **Escala**
 
@@ -179,6 +179,16 @@ Los metadatos funcionales no bajan de 11 px. Las etiquetas decorativas que son p
 
 ## Componentes
 
+### Hero de portada
+
+La portada usa una **lámina celeste transparente** provista como material de identidad: sol ocre, luna, galaxia, arcos, cruces y una marca de eje en el centro. Se coloca como fondo centrado, a sangre, sobre el marfil; el texto se compone encima, sin caja ni tarjeta.
+
+- Wordmark «Quicio» centrado en Fraunces, sobre el sol y el borde de la luna.
+- Descriptor «ESTUDIO INDEPENDIENTE» en JetBrains Mono, mayúsculas y tracking amplio.
+- Línea divisoria y punto ocre tomados de la propia lámina.
+- Frase italic al pie: «Un espacio para investigar, crear y publicar.»
+- Fila de disciplinas y coordenadas en la base, con un velo de papel que garantiza lectura sobre la luna.
+
 ### Cabecera
 
 Barra sticky de papel sólido, línea inferior capilar. Isotipo + wordmark + descriptor; navegación mono con índices; contacto entre corchetes. En móvil se reemplaza por un `<details>` nativo («Índice») que no necesita JavaScript.
@@ -201,7 +211,7 @@ Filas de registro, no tarjetas. Número, placa, título, resumen, tipo, estado y
 
 ### Placas
 
-Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa una placa celeste propia (luna, sol, órbita).
+Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa la lámina celeste provista, no una placa generada.
 
 ### Enlaces
 
@@ -210,10 +220,9 @@ Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura
 ## Movimiento
 
 - Entrada de la portada: `rise` de 640 ms, opacidad y 1.2rem de desplazamiento, escalonada.
-- Órbita de la placa celeste: 90 s lineales, un punto ocre sobre el círculo.
 - Hover: 280 ms, `cubic-bezier(0.22, 1, 0.36, 1)`.
 - `prefers-reduced-motion: reduce`: se eliminan animaciones y transiciones; la página queda completa y navegable.
-- No hay parallax, scroll-jacking, glitch ni animaciones decorativas fuera de la placa.
+- No hay parallax, scroll-jacking, glitch ni animaciones decorativas fuera de la entrada de la portada.
 
 ## Relación con los proyectos
 
@@ -266,7 +275,7 @@ El detector de Impeccable señala algunas decisiones que son deliberadas y forma
 - **Paleta marfil.** El brief fija `#F0EDE5` como campo predominante. No es un beige por defecto: es el papel de la cámara clara y se contrasta con carbón, ocre y superficies oscuras.
 - **Etiquetas numeradas sobre los titulares.** La numeración editorial (`02 / Proyectos`) es un recurso de archivo, no un eyebrow de SaaS. Ordena el recorrido y conecta con los índices de las publicaciones.
 - **Placas SVG extensas.** Las escenas de la portada y de los proyectos son diagramas generativos, no ilustraciones de relleno. Se generan con semilla y se documentan; no son capturas de stock.
-- **Instrument Serif y Archivo.** Se evaluaron alternativas; Instrument Serif sostiene el wordmark de referencia y Archivo aporta una lectura editorial más específica que Inter. La decisión está registrada en la sección de tipografía.
+- **Fraunces y Archivo.** Se evaluaron Geliant e Imperator, pero sus licencias no permiten publicarlas. Fraunces conserva el gesto del wordmark de referencia y Archivo aporta una lectura editorial más específica que Inter. La decisión está registrada en la sección de tipografía.
 
 ## Anti-patrones rechazados
 
@@ -286,4 +295,4 @@ El detector de Impeccable señala algunas decisiones que son deliberadas y forma
 
 ## Changelog
 
-- 2026-11-24: sistema inicial. Instrument Serif + Archivo + JetBrains Mono; paleta de papel y ocre; placas generativas; shell editorial; sitio Astro desplegable.
+- 2026-11-24: sistema inicial. Fraunces + Archivo + JetBrains Mono; paleta de papel y ocre; placas generativas; shell editorial; sitio Astro desplegable.

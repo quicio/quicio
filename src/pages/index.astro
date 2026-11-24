@@ -1,6 +1,7 @@
 ---
 import Base from "../layouts/Base.astro";
-import CelestialPlate from "../components/CelestialPlate.astro";
+import { Image } from "astro:assets";
+import heroSky from "../assets/images/hero-espacio.png";
 import SectionHeading from "../components/SectionHeading.astro";
 import ProjectEntry from "../components/ProjectEntry.astro";
 import ExperimentRow from "../components/ExperimentRow.astro";
@@ -35,46 +36,43 @@ const imagenSocial = "/og.png";
 
 <Base description={inicio.data.description} image={imagenSocial}>
   <section class="hero">
-    <div class="container hero__grid">
-      <div class="hero__copy">
-        <h1 class="hero__title rise rise--2">Quicio</h1>
-        <p class="hero__descriptor rise rise--2">
-          {inicio.data.lead}
-        </p>
-
-        <p class="hero__intro rise rise--3">
-          {inicio.data.intro}
-        </p>
-
-        <p class="hero__phrase mono rise rise--3">
-          Investigar <span aria-hidden="true">·</span> imaginar
-          <span aria-hidden="true">·</span> construir
-        </p>
-
-        <div class="hero__actions rise rise--4">
-          <a class="link-arrow link-arrow--down" href="#proyectos">
-            Entrar al archivo
-          </a>
-          <a class="hero__contact bracket" href={url("/contacto/")}>Contacto</a>
-        </div>
-      </div>
-
-      <div class="hero__plate rise rise--2">
-        <CelestialPlate />
-      </div>
+    <div class="hero__sky" aria-hidden="true">
+      <Image
+        src={heroSky}
+        alt=""
+        widths={[768, 1200, 1536]}
+        sizes="100vw"
+        format="webp"
+        quality={90}
+        loading="eager"
+        fetchpriority="high"
+        class="hero__image"
+      />
     </div>
+    <div class="hero__veil" aria-hidden="true"></div>
 
-    <div class="container hero__foot">
-      <ul class="hero__disciplines" aria-label="Campos de trabajo">
-        {
-          disciplinas.map((disciplina) => (
-            <li>{disciplina}</li>
-          ))
-        }
-      </ul>
-      <p class="hero__coords mono">
-        {sitio.lugar} <span aria-hidden="true">·</span> {sitio.coordenadas}
+    <div class="container hero__inner">
+      <div class="hero__lockup rise">
+        <h1 class="hero__title">Quicio</h1>
+        <p class="hero__descriptor">Estudio independiente</p>
+      </div>
+
+      <p class="hero__phrase">
+        Un espacio para investigar, crear y publicar.
       </p>
+
+      <div class="hero__foot">
+        <ul class="hero__disciplines" aria-label="Campos de trabajo">
+          {
+            disciplinas.map((disciplina) => (
+              <li>{disciplina}</li>
+            ))
+          }
+        </ul>
+        <p class="hero__coords mono">
+          {sitio.lugar} <span aria-hidden="true">·</span> {sitio.coordenadas}
+        </p>
+      </div>
     </div>
   </section>
 
@@ -249,102 +247,107 @@ const imagenSocial = "/og.png";
 <style>
   .hero {
     position: relative;
+    min-height: calc(100svh - var(--header-h));
     overflow: hidden;
     border-bottom: 1px solid var(--line);
+    background: var(--paper);
   }
 
-  .hero__grid {
-    min-height: calc(100svh - var(--header-h));
-    display: grid;
-    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
-    align-items: center;
-    gap: clamp(1rem, 3vw, 3.5rem);
-    padding-block: var(--space-xl) var(--space-lg);
+  .hero__sky {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
   }
 
-  .hero__copy {
+  .hero__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+  }
+
+  .hero__veil {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 42%;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      to bottom,
+      rgba(240, 237, 229, 0) 0%,
+      rgba(240, 237, 229, 0.5) 55%,
+      var(--paper) 100%
+    );
+  }
+
+  .hero__inner {
     position: relative;
-    z-index: 2;
-    padding-block: var(--space-md);
+    z-index: 1;
+    min-height: calc(100svh - var(--header-h));
+    display: flex;
+    flex-direction: column;
   }
 
-  .hero__copy .eyebrow {
-    align-items: center;
-    gap: 0.55rem;
+  .hero__lockup {
+    position: absolute;
+    top: 29%;
+    left: 50%;
+    width: min(92%, 78rem);
+    transform: translateX(-50%);
+    text-align: center;
+    z-index: 2;
   }
 
   .hero__title {
-    margin-top: var(--space-md);
-    margin-left: -0.055em;
-    font-size: var(--display-xl);
-    line-height: 0.76;
+    margin: 0;
+    font-size: clamp(4.5rem, min(12.5vw, 17vh), 11rem);
+    font-weight: 400;
+    line-height: 0.78;
     letter-spacing: -0.032em;
+    color: var(--ink);
   }
 
   .hero__descriptor {
-    margin-top: 2rem;
-    font-family: var(--font-display);
-    font-size: var(--text-xl);
-    font-style: italic;
-    line-height: 1;
-    color: var(--ochre-deep);
-  }
-
-  .hero__intro {
-    max-width: 44ch;
-    margin-top: var(--space-md);
-    font-size: var(--text-md);
-    line-height: 1.5;
+    margin-top: 1.25rem;
+    font-family: var(--font-mono);
+    font-size: clamp(0.62rem, 0.85vw, 0.78rem);
+    line-height: 1.4;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
     color: var(--ink-soft);
   }
 
   .hero__phrase {
-    margin-top: var(--space-lg);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--ochre-deep);
-  }
-
-  .hero__actions {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: var(--space-md);
-    margin-top: var(--space-lg);
-  }
-
-  .hero__contact {
-    text-decoration: none;
-    color: var(--ink-muted);
-  }
-
-  .hero__contact:hover {
-    color: var(--ochre-deep);
-  }
-
-  .hero__plate {
-    position: relative;
-    z-index: 1;
-    align-self: stretch;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    margin-right: calc(var(--gutter) * -1);
-    margin-block: calc(var(--space-md) * -1);
-  }
-
-  .hero__plate :global(.celestial) {
-    width: min(60vw, 790px);
-    margin-right: -3.5rem;
+    position: absolute;
+    left: 50%;
+    bottom: 7.4rem;
+    width: min(90%, 52rem);
+    transform: translateX(-50%);
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: clamp(1.2rem, 2.1vw, 2rem);
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--ink);
+    text-wrap: balance;
+    z-index: 2;
   }
 
   .hero__foot {
+    position: absolute;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: 0;
     display: flex;
     align-items: baseline;
     justify-content: space-between;
     gap: var(--space-md);
-    padding-block: var(--space-sm);
+    padding-block: 1.1rem;
     border-top: 1px solid var(--line-soft);
+    z-index: 2;
   }
 
   .hero__disciplines {
@@ -607,10 +610,6 @@ const imagenSocial = "/og.png";
   }
 
   @media (max-width: 1100px) {
-    .hero__grid {
-      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
-    }
-
     .home-manifesto__content {
       grid-template-columns: 1fr;
       gap: var(--space-md);
@@ -648,37 +647,26 @@ const imagenSocial = "/og.png";
   }
 
   @media (max-width: 900px) {
-    .hero__grid {
-      grid-template-columns: 1fr;
-      min-height: auto;
-      padding-top: var(--space-lg);
-    }
-
-    .hero__plate {
-      order: 2;
-      margin-inline: calc(var(--gutter) * -1);
-      margin-block: var(--space-sm) 0;
-      justify-content: center;
-    }
-
-    .hero__plate :global(.celestial) {
-      width: 112%;
-      margin-right: 0;
-    }
-
-    .hero__copy {
-      order: 1;
-      padding-block: var(--space-sm);
-    }
-
-    .hero__title {
-      font-size: clamp(4.5rem, 22vw, 9rem);
-    }
-
     .hero__foot {
-      align-items: flex-start;
+      align-items: center;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.35rem;
+      padding-block: 0.85rem;
+      text-align: center;
+    }
+
+    .hero__disciplines {
+      justify-content: center;
+      gap: 0.3rem 0.8rem;
+      font-size: 0.66rem;
+    }
+
+    .hero__disciplines li:not(:last-child)::after {
+      display: none;
+    }
+
+    .hero__coords {
+      font-size: 0.7rem;
     }
 
     .home-manifesto__grid,
@@ -710,5 +698,29 @@ const imagenSocial = "/og.png";
       padding-top: var(--space-xl);
       border-top: 1px solid var(--line);
     }
+  }
+
+  @media (max-width: 700px) {
+    .hero__lockup {
+      top: 32.5%;
+      width: 100%;
+    }
+
+    .hero__title {
+      font-size: clamp(4.2rem, 22vw, 8rem);
+    }
+
+    .hero__descriptor {
+      margin-top: 0.8rem;
+      font-size: 0.62rem;
+      letter-spacing: 0.18em;
+    }
+
+    .hero__phrase {
+      bottom: 7rem;
+      width: 86%;
+      font-size: 1.15rem;
+    }
+
   }
 </style>

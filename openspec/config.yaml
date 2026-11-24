@@ -23,7 +23,7 @@ context: |
   Identidad:
   - Marfil #F0EDE5, carbón #242321, gris piedra #77746D, ocre #B77A35,
     superficie oscura #171817, verde mineral #78816D.
-  - Instrument Serif (display), Archivo (lectura), JetBrains Mono (metadatos).
+  - Fraunces (display), Archivo (lectura), JetBrains Mono (metadatos).
   - Semina, Rizoma e Intersticio conservan su autonomía visual.
   - No inventar equipo, clientes, métricas, fechas ni hitos.
   - Evitar lenguaje corporativo.
@@ -57,7 +57,7 @@ rules:
 operations:
   apply:
     guidance:
-      - Un cambio a la vez, en orden: site-foundation, project-catalog, lab-and-archive, studio-pages, design-finish.
+      - "Un cambio a la vez, en orden: site-foundation, project-catalog, lab-and-archive, studio-pages, design-finish."
       - El contenido se edita en Markdown; no hardcodear fichas en componentes.
       - No agregar dependencias de runtime; el sitio funciona sin JavaScript.
       - Semina, Rizoma e Intersticio conservan su propia identidad.
