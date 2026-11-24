@@ -52,9 +52,9 @@ const imagenSocial = "/og.png";
     <div class="hero__veil" aria-hidden="true"></div>
 
     <div class="container hero__inner">
-      <div class="hero__lockup rise">
-        <h1 class="hero__title">Quicio</h1>
-        <p class="hero__descriptor">Estudio independiente</p>
+      <div class="hero__lockup">
+        <h1 class="hero__title rise">Quicio</h1>
+        <p class="hero__descriptor rise rise--2">Estudio independiente</p>
       </div>
 
       <p class="hero__phrase">
@@ -291,6 +291,7 @@ const imagenSocial = "/og.png";
     flex-direction: column;
   }
 
+  /* No aplicar .rise al lockup: su transform pisa el translateX de centrado. */
   .hero__lockup {
     position: absolute;
     top: 29%;
