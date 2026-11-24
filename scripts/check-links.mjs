@@ -7,7 +7,8 @@ import { readdir, readFile, stat } from "node:fs/promises";
 import { join, relative } from "node:path";
 
 const DIST = new URL("../dist/", import.meta.url).pathname;
-const SITE = "https://quicio.org";
+const BASE = (process.env.BASE_PATH || "/").replace(/\/$/, "");
+const SITE = process.env.SITE_URL || "https://quicio.org";
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true });
@@ -38,7 +39,11 @@ function isIgnored(url) {
 function normalizePath(url) {
   const clean = url.split("#")[0].split("?")[0];
   if (!clean) return null;
-  return clean.startsWith("/") ? clean : `/${clean}`;
+  const path = clean.startsWith("/") ? clean : `/${clean}`;
+  if (BASE && (path === BASE || path.startsWith(`${BASE}/`))) {
+    return path.slice(BASE.length) || "/";
+  }
+  return path;
 }
 
 async function exists(path) {

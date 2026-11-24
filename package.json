@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
+    "@astrojs/markdown-remark": "^7.3.10",
     "prettier": "^3.10.1",
     "prettier-plugin-astro": "^1.1.2",
     "typescript": "^5.9.3"

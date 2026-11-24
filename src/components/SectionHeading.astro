@@ -1,4 +1,6 @@
 ---
+import { url } from "../lib/url";
+
 interface Props {
   index: string;
   label: string;
@@ -16,6 +18,8 @@ const {
   linkLabel = "Ver todo",
   class: className = "",
 } = Astro.props;
+
+const target = href ? url(href) : undefined;
 ---
 
 <header class:list={["section-head", className]}>
@@ -27,8 +31,8 @@ const {
     title && (
       <div class="section-head__title">
         <h2>{title}</h2>
-        {href && (
-          <a class="link-arrow" href={href}>
+        {target && (
+          <a class="link-arrow" href={target}>
             {linkLabel}
           </a>
         )}

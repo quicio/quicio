@@ -32,11 +32,14 @@ jobs:
 
       - name: Build
         env:
-          SITE_URL: https://quicio.org
-          BASE_PATH: /
+          SITE_URL: ${{ vars.SITE_URL || 'https://quicio.github.io' }}
+          BASE_PATH: ${{ vars.BASE_PATH || '/quicio' }}
         run: npm run build
 
       - name: Check internal links
+        env:
+          SITE_URL: ${{ vars.SITE_URL || 'https://quicio.github.io' }}
+          BASE_PATH: ${{ vars.BASE_PATH || '/quicio' }}
         run: npm run links
 
       - uses: actions/configure-pages@v6

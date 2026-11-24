@@ -4,7 +4,8 @@
 
 Sitio institucional de Quicio: un archivo editorial de proyectos, experimentos, publicaciones e investigaciones. No es una agencia, una startup ni una empresa de servicios. Es el contexto común de proyectos que conservan su propia voz y su propio despliegue.
 
-- Sitio: [quicio.org](https://quicio.org)
+- Preview: [quicio.github.io/quicio](https://quicio.github.io/quicio/)
+- Sitio final: [quicio.org](https://quicio.org) — pendiente de DNS
 - Organización: [github.com/quicio](https://github.com/quicio)
 - Contacto: [hello@quicio.org](mailto:hello@quicio.org)
 
@@ -104,18 +105,27 @@ La identidad se documenta en [`DESIGN.md`](DESIGN.md) y se puede consultar en `/
 
 El workflow `.github/workflows/deploy.yml` construye y publica en GitHub Pages en cada push a `main`.
 
-Requisitos:
+El repositorio usa por defecto la URL de preview del project page:
 
-1. El repositorio `quicio/quicio` debe ser público o tener Pages habilitado.
-2. En **Settings → Pages**, usar **GitHub Actions** como fuente.
-3. El dominio `quicio.org` debe apuntar a GitHub Pages. El repositorio incluye `public/CNAME` con `quicio.org`.
-4. Configurar los registros DNS del dominio según la documentación de GitHub Pages.
-
-Para un preview sin tocar el dominio:
-
-```bash
-SITE_URL=https://quicio.github.io BASE_PATH=/quicio npm run build
 ```
+SITE_URL=https://quicio.github.io
+BASE_PATH=/quicio
+```
+
+Eso deja el sitio en **https://quicio.github.io/quicio/** con todos los assets, enlaces internos, canonical y sitemap bajo `/quicio/`.
+
+Para publicar en **https://quicio.org**:
+
+1. Configurar los registros DNS de `quicio.org` hacia GitHub Pages.
+2. En **Settings → Variables and secrets → Actions**, definir:
+   - `SITE_URL=https://quicio.org`
+   - `BASE_PATH=/`
+3. En **Settings → Pages**, definir el custom domain `quicio.org` y activar HTTPS.
+4. Hacer push a `main` o ejecutar el workflow manualmente.
+
+El repositorio incluye `public/CNAME` con `quicio.org` y `public/og.png` con la imagen social.
+
+Requisitos: el repositorio debe ser público o tener Pages habilitado; la fuente de Pages debe ser **GitHub Actions**.
 
 ## Verificación
 

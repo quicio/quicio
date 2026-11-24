@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ProjectPlate from "../../components/ProjectPlate.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
   const archivo = await getCollection("archivo");
@@ -19,12 +20,13 @@ const { entry } = Astro.props;
 const data = entry.data;
 const { Content } = await render(entry);
 const num = String(data.order).padStart(2, "0");
+const artifactHref = data.artifact?.startsWith("/") ? url(data.artifact) : data.artifact;
 ---
 
 <Base title={data.title} description={data.summary} type="article">
   <article class="archive-entry">
     <div class="container">
-      <a class="archive-entry__back" href="/archivo/">
+      <a class="archive-entry__back" href={url("/archivo/")}>
         <span aria-hidden="true">←</span> Archivo
       </a>
 
@@ -56,7 +58,7 @@ const num = String(data.order).padStart(2, "0");
             data.artifact && (
               <a
                 class="archive-entry__artifact link-arrow"
-                href={data.artifact}
+                href={artifactHref}
                 target="_blank"
                 rel="noreferrer"
               >

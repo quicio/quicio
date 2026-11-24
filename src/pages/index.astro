@@ -7,6 +7,7 @@ import ExperimentRow from "../components/ExperimentRow.astro";
 import ArchiveRow from "../components/ArchiveRow.astro";
 import { getCollection, getEntry, render } from "astro:content";
 import { disciplinas, sitio } from "../data/sitio";
+import { url } from "../lib/url";
 
 const inicio = await getEntry("paginas", "inicio");
 const acerca = await getEntry("paginas", "acerca");
@@ -54,7 +55,7 @@ const imagenSocial = "/og.png";
           <a class="link-arrow link-arrow--down" href="#proyectos">
             Entrar al archivo
           </a>
-          <a class="hero__contact bracket" href="/contacto/">Contacto</a>
+          <a class="hero__contact bracket" href={url("/contacto/")}>Contacto</a>
         </div>
       </div>
 
@@ -141,7 +142,7 @@ const imagenSocial = "/og.png";
           publicaciones, arte y música sin subordinarlos a una sola lógica.
           Los proyectos pueden crecer, mutar o independizarse.
         </p>
-        <a class="link-arrow" href="/acerca/">Cómo trabaja Quicio</a>
+        <a class="link-arrow" href={url("/acerca/")}>Cómo trabaja Quicio</a>
       </div>
 
       <div class="home-field__principles">
@@ -163,7 +164,7 @@ const imagenSocial = "/og.png";
         </ol>
         <p class="home-field__aside">
           Independencia creativa, cultura abierta y pensamiento crítico. Los
-          ocho principios están en <a href="/acerca/">Acerca de Quicio</a>.
+          ocho principios están en <a href={url("/acerca/")}>Acerca de Quicio</a>.
         </p>
       </div>
     </div>
@@ -239,7 +240,7 @@ const imagenSocial = "/og.png";
         <a class="home-contact__email" href={`mailto:${sitio.email}`}>
           {sitio.email}
         </a>
-        <a class="link-arrow" href="/contacto/">Cómo escribir</a>
+        <a class="link-arrow" href={url("/contacto/")}>Cómo escribir</a>
       </div>
     </div>
   </section>

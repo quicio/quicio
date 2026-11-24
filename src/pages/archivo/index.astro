@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ArchiveRow from "../../components/ArchiveRow.astro";
 import { getCollection } from "astro:content";
+import { url } from "../../lib/url";
 
 const archivo = (await getCollection("archivo")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -69,7 +70,7 @@ const archivo = (await getCollection("archivo")).sort(
           solo publica entradas comprobables. No se inventan fechas, proyectos
           ni hitos para llenar el vacío.
         </p>
-        <a class="link-arrow" href="/experimentos/">Ver procesos abiertos</a>
+        <a class="link-arrow" href={url("/experimentos/")}>Ver procesos abiertos</a>
       </div>
     </div>
   </section>

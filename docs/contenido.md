@@ -110,7 +110,7 @@ npm run build
 npm run links
 ```
 
-El build genera `dist/`. GitHub Actions lo publica en `quicio.org` al hacer push a `main`.
+El build genera `dist/`. GitHub Actions lo publica en el preview `https://quicio.github.io/quicio/` con `BASE_PATH=/quicio`, y en `https://quicio.org` cuando se configuren las variables `SITE_URL=https://quicio.org` y `BASE_PATH=/`.
 
 ## Verificar
 

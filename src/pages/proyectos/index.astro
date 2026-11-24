@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ProjectEntry from "../../components/ProjectEntry.astro";
 import { getCollection } from "astro:content";
+import { url } from "../../lib/url";
 
 const proyectos = (await getCollection("proyectos")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -90,7 +91,7 @@ const featured = proyectos.filter((project) => project.data.featured);
         Las fichas enlazan a la página o repositorio de cada proyecto. Quicio no
         duplica sus productos.
       </p>
-      <a class="link-arrow" href="/experimentos/">Ver experimentos</a>
+      <a class="link-arrow" href={url("/experimentos/")}>Ver experimentos</a>
     </aside>
 
     <div class="projects-main">
@@ -139,7 +140,7 @@ const featured = proyectos.filter((project) => project.data.featured);
         <p class="label">Nota</p>
         <p>
           Los prototipos que todavía no tienen una superficie pública viven en
-          <a href="/experimentos/">Experimentos</a>. El archivo conserva lo que
+          <a href={url("/experimentos/")}>Experimentos</a>. El archivo conserva lo que
           fue reemplazado o derivó en otra cosa.
         </p>
       </aside>

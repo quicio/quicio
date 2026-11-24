@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import { url } from "../lib/url";
 
 interface Props {
   entry: CollectionEntry<"archivo">;
@@ -11,7 +12,7 @@ const data = entry.data;
 const num = String(index).padStart(2, "0");
 ---
 
-<a class="archive-row" href={`/archivo/${entry.id}/`}>
+<a class="archive-row" href={url(`/archivo/${entry.id}/`)}>
   <span class="archive-row__year">{data.year}</span>
   <span class="archive-row__index" aria-hidden="true">{num}</span>
   <span class="archive-row__body">

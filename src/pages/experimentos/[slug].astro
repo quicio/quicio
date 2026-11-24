@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ProjectPlate from "../../components/ProjectPlate.astro";
 import { getCollection, render, type CollectionEntry } from "astro:content";
+import { url } from "../../lib/url";
 
 export async function getStaticPaths() {
   const experimentos = await getCollection("experimentos");
@@ -28,6 +29,7 @@ const next = position < all.length - 1 ? all[position + 1] : null;
 
 const num = String(data.order).padStart(2, "0");
 const external = data.link?.startsWith("http") ?? false;
+const linkHref = data.link?.startsWith("/") ? url(data.link) : data.link;
 ---
 
 <Base
@@ -38,7 +40,7 @@ const external = data.link?.startsWith("http") ?? false;
 >
   <article class="experiment">
     <div class="container">
-      <a class="experiment__back" href="/experimentos/">
+      <a class="experiment__back" href={url("/experimentos/")}>
         <span aria-hidden="true">←</span> Experimentos
       </a>
 
@@ -93,7 +95,7 @@ const external = data.link?.startsWith("http") ?? false;
         data.link && (
           <a
             class="link-arrow experiment__external"
-            href={data.link}
+            href={linkHref}
             target={external ? "_blank" : undefined}
             rel={external ? "noreferrer" : undefined}
           >
@@ -105,7 +107,7 @@ const external = data.link?.startsWith("http") ?? false;
       <nav class="experiment__pager" aria-label="Otros experimentos">
         {
           previous ? (
-            <a href={`/experimentos/${previous.id}/`}>
+            <a href={url(`/experimentos/${previous.id}/`)}>
               <span>← Anterior</span>
               <strong>{previous.data.title}</strong>
             </a>
@@ -115,7 +117,7 @@ const external = data.link?.startsWith("http") ?? false;
         }
         {
           next ? (
-            <a href={`/experimentos/${next.id}/`} class="experiment__pager-next">
+            <a href={url(`/experimentos/${next.id}/`)} class="experiment__pager-next">
               <span>Siguiente →</span>
               <strong>{next.data.title}</strong>
             </a>

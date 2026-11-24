@@ -2,6 +2,7 @@
 import Base from "../../layouts/Base.astro";
 import ExperimentRow from "../../components/ExperimentRow.astro";
 import { getCollection } from "astro:content";
+import { url } from "../../lib/url";
 
 const experimentos = (await getCollection("experimentos")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -60,7 +61,7 @@ const experimentos = (await getCollection("experimentos")).sort(
           permanecen como preguntas abiertas. Los prototipos privados se
           presentan sin enlace, con su estado real.
         </p>
-        <a class="link-arrow" href="/archivo/">Ver el archivo</a>
+        <a class="link-arrow" href={url("/archivo/")}>Ver el archivo</a>
       </div>
     </div>
   </section>

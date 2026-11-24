@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import { sitio } from "../data/sitio";
+import { url } from "../lib/url";
 
 const anio = new Date().getFullYear();
 ---
@@ -21,11 +22,11 @@ const anio = new Date().getFullYear();
         <div class="footer__column">
           <p class="footer__label">Secciones</p>
           <ul>
-            <li><a href="/proyectos/">Proyectos</a></li>
-            <li><a href="/experimentos/">Experimentos</a></li>
-            <li><a href="/archivo/">Archivo</a></li>
-            <li><a href="/acerca/">Acerca</a></li>
-            <li><a href="/contacto/">Contacto</a></li>
+            <li><a href={url("/proyectos/")}>Proyectos</a></li>
+            <li><a href={url("/experimentos/")}>Experimentos</a></li>
+            <li><a href={url("/archivo/")}>Archivo</a></li>
+            <li><a href={url("/acerca/")}>Acerca</a></li>
+            <li><a href={url("/contacto/")}>Contacto</a></li>
           </ul>
         </div>
 
@@ -75,8 +76,8 @@ const anio = new Date().getFullYear();
         <div class="footer__column">
           <p class="footer__label">Sistema</p>
           <ul>
-            <li><a href="/sistema/">Identidad y colofón</a></li>
-            <li><a href="/archivo/">Archivo del estudio</a></li>
+            <li><a href={url("/sistema/")}>Identidad y colofón</a></li>
+            <li><a href={url("/archivo/")}>Archivo del estudio</a></li>
           </ul>
         </div>
       </div>

@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { getEntry, render } from "astro:content";
 import { sitio } from "../data/sitio";
+import { url } from "../lib/url";
 
 const acerca = await getEntry("paginas", "acerca");
 
@@ -121,7 +122,7 @@ const principios = acerca.data.principles;
           encuentren aquí un lugar. No hay una estructura comercial ni un
           equipo ficticio.
         </p>
-        <a class="link-arrow" href="/contacto/">Escribir a Quicio</a>
+        <a class="link-arrow" href={url("/contacto/")}>Escribir a Quicio</a>
       </div>
     </div>
   </section>

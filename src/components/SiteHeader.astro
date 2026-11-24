@@ -1,6 +1,7 @@
 ---
 import Logo from "./Logo.astro";
 import { navegacion } from "../data/sitio";
+import { url } from "../lib/url";
 
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(href);
@@ -13,7 +14,7 @@ function number(index: number) {
 <header class="site-header">
   <div class="container site-header__inner">
     <div class="site-header__brand-wrap">
-      <a class="site-header__brand" href="/">
+      <a class="site-header__brand" href={url("/")}>
         <Logo showDescriptor={false} />
       </a>
       <span class="site-header__rule" aria-hidden="true"></span>
@@ -28,7 +29,7 @@ function number(index: number) {
           navegacion.map((item, index) => (
             <li>
               <a
-                href={item.href}
+                href={url(item.href)}
                 class:list={["nav-link", { "is-active": isActive(item.href) }]}
                 aria-current={isActive(item.href) ? "page" : undefined}
               >
@@ -43,7 +44,7 @@ function number(index: number) {
       </ul>
     </nav>
 
-    <a class="site-header__contact bracket" href="/contacto/">Contacto</a>
+    <a class="site-header__contact bracket" href={url("/contacto/")}>Contacto</a>
 
     <details class="nav-drawer">
       <summary class="nav-drawer__summary">
@@ -57,7 +58,7 @@ function number(index: number) {
               navegacion.map((item, index) => (
                 <li>
                   <a
-                    href={item.href}
+                    href={url(item.href)}
                     class:list={[
                       "nav-drawer__link",
                       { "is-active": isActive(item.href) },
@@ -72,7 +73,7 @@ function number(index: number) {
             }
             <li>
               <a
-                href="/contacto/"
+                href={url("/contacto/")}
                 class:list={[
                   "nav-drawer__link",
                   { "is-active": isActive("/contacto/") },

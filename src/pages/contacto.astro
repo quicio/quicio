@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { getEntry, render } from "astro:content";
 import { correoAsuntos, sitio } from "../data/sitio";
+import { url } from "../lib/url";
 
 const contacto = await getEntry("paginas", "contacto");
 
@@ -82,8 +83,8 @@ const email = contacto.data.email ?? sitio.email;
         </p>
         <ul class="contact-body__links">
           <li><a href={sitio.github} target="_blank" rel="noreferrer">GitHub ↗</a></li>
-          <li><a href="/proyectos/">Proyectos</a></li>
-          <li><a href="/acerca/">Acerca de Quicio</a></li>
+          <li><a href={url("/proyectos/")}>Proyectos</a></li>
+          <li><a href={url("/acerca/")}>Acerca de Quicio</a></li>
         </ul>
       </div>
 
