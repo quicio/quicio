@@ -24,6 +24,8 @@ linkLabel: Abrir proyecto
 repo: https://github.com/quicio/ejemplo # opcional
 plate: orbit
 seed: 7
+image: ejemplo.jpg # opcional, en src/assets/proyectos/
+imageAlt: "Descripción breve del arte" # obligatorio si hay image
 featured: false
 publicSurface: true
 ---
@@ -34,6 +36,8 @@ Reglas:
 
 - `link` es la página propia del proyecto; `repo` es el repositorio. Se muestran ambos si existen.
 - No se crean páginas internas de detalle en Quicio. La ficha enlaza a la superficie real del proyecto.
+- `image` e `imageAlt`: si existen, la ficha muestra el arte propio en el marco de la placa; si faltan, se usa la placa generativa. El archivo va en `src/assets/proyectos/` y el alt describe el arte, no repite el título.
+- El arte debe ser del archivo del estudio o tener permiso y crédito. No se usa fotografía de stock.
 - `featured: true` solo para Semina, Rizoma e Intersticio. Como máximo tres.
 - `group: editorial` para publicaciones y pensamiento; `instrumentos` para herramientas de lectura, sonido, imagen; `herramientas` para infraestructura y sistemas.
 - `status` debe ser verificable: En desarrollo, Prototipo, Publicación activa, Herramienta, Librería, Sistema, En pausa.
@@ -59,11 +63,13 @@ link: https://... # opcional; también admite una ruta interna como /sistema/
 linkLabel: Ver prototipo
 plate: wave
 seed: 3
+image: experimento.jpg # opcional, en src/assets/experimentos/
+imageAlt: "Descripción breve del arte" # obligatorio si hay image
 ---
 Cuerpo del experimento.
 ```
 
-Los experimentos sí tienen página propia en `/experimentos/<slug>/`. Si el prototipo es privado, omitir `link` y explicarlo en el cuerpo.
+Los experimentos sí tienen página propia en `/experimentos/<slug>/`. Si el prototipo es privado, omitir `link` y explicarlo en el cuerpo. `image` e `imageAlt` funcionan igual que en los proyectos: sustituyen a la placa en el índice y en la cabecera de la página, y si faltan se conserva la placa generativa.
 
 ## Archivo
 

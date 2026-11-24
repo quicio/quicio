@@ -14,6 +14,8 @@ linkLabel: Abrir Nacre
 repo: https://github.com/quicio/nacre
 plate: wave
 seed: 21
+image: nacre.jpg
+imageAlt: "Onda de partículas blanquecinas sobre fondo negro"
 ---
 
 Nacre parte de una premisa distinta a la de un secuenciador: no se programan canciones, se construyen sistemas capaces de producirlas. Su dominio está en las reglas, los materiales y la evolución de una performance.

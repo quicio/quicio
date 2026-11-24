@@ -1,6 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import ProjectPlate from "./ProjectPlate.astro";
+import EntryImage from "./EntryImage.astro";
+import { getExperimentImage } from "../lib/content-image";
 import { url } from "../lib/url";
 
 interface Props {
@@ -11,13 +13,24 @@ interface Props {
 const { experiment, index } = Astro.props;
 const data = experiment.data;
 const num = String(index).padStart(2, "0");
+const image = getExperimentImage(data.image);
+const imageAlt = data.imageAlt ?? "";
 ---
 
 <a class="experiment-row" href={url(`/experimentos/${experiment.id}/`)}>
   <span class="experiment-row__index" aria-hidden="true">{num}</span>
 
-  <span class="experiment-row__plate">
-    <ProjectPlate variant={data.plate} seed={data.seed} label={`/ ${num}`} />
+  <span class:list={["experiment-row__plate", { "experiment-row__plate--image": image }]}>
+    {
+      image ? (
+        <>
+          <EntryImage src={image} alt={imageAlt} sizes="9rem" widths={[240, 480]} />
+          <span class="experiment-row__plate-index" aria-hidden="true">/ {num}</span>
+        </>
+      ) : (
+        <ProjectPlate variant={data.plate} seed={data.seed} label={`/ ${num}`} />
+      )
+    }
   </span>
 
   <span class="experiment-row__main">
@@ -66,6 +79,24 @@ const num = String(index).padStart(2, "0");
     display: block;
     aspect-ratio: 4 / 3;
     overflow: hidden;
+    position: relative;
+  }
+
+  .experiment-row__plate--image {
+    border: 1px solid var(--line);
+    background: var(--dark);
+  }
+
+  .experiment-row__plate-index {
+    position: absolute;
+    left: 0.6rem;
+    bottom: 0.5rem;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 229, 0.72);
   }
 
   .experiment-row__main {

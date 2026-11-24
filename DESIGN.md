@@ -27,9 +27,9 @@ typography:
     letterSpacing: "-0.018em"
   wordmark:
     fontFamily: "Roman Serif, Iowan Old Style, Palatino, Georgia, serif"
-    fontSize: "clamp(4.5rem, min(12.5vw, 17vh), 11rem)"
+    fontSize: "13.1cqw dentro de la lámina del hero"
     fontWeight: 400
-    lineHeight: 0.78
+    lineHeight: 0.8
     letterSpacing: "-0.032em"
   body:
     fontFamily: "Archivo Variable, Archivo, system-ui, sans-serif"
@@ -103,12 +103,12 @@ La identidad se organiza alrededor de la palabra **quicio**: la hoja de una puer
 
 ## Logo
 
-El logotipo es tipográfico: **Quicio** en Roman Serif, con tracking negativo y una altura de línea que lo vuelve casi una inscripción. Se acompaña de un **isotipo de eje y arcos**: una línea vertical, dos arcos que se abren desde un punto de pivote y un punto ocre en el centro.
+El logotipo es tipográfico: **Quicio** en Roman Serif, con tracking negativo y una altura de línea que lo vuelve casi una inscripción. Se acompaña del **isotipo de eje y arcos**: una línea vertical con dos arcos que se abren hacia abajo desde un punto alto del eje. No lleva pivote ni punto ocre; el ocre queda para el divisor y las señales de la interfaz.
 
 - **Lockup horizontal:** isotipo + wordmark + filete + descriptor «Estudio independiente» en mono.
 - **Lockup apilado:** isotipo, wordmark y descriptor en columna. Se usa en el footer.
-- **Isotipo:** funciona a 16/32 px como favicon y como marca de agua de placas.
-- **Versión negativa:** `currentColor` sobre `--dark`; el pivote pasa a `--ochre-soft`.
+- **Isotipo:** relación 2:3 (100×150). Funciona a 16/32 px como favicon y como marca de agua de placas.
+- **Versión negativa:** `currentColor` sobre `--dark`; el trazo pasa a `--dark-ink`.
 
 El isotipo no representa circuitos, chips, cerebros ni engranajes. Es un eje, un umbral y un movimiento.
 
@@ -181,19 +181,30 @@ Los metadatos funcionales no bajan de 11 px. Las etiquetas decorativas que son p
 
 ### Hero de portada
 
-La portada compone la escena celeste **por capas separadas**: sol ocre, luna craterizada, nebulosa, órbita SVG, glyph SVG, divisor SVG y marcas de esquina SVG. La escena se centra y se recorta como un fondo a sangre; el texto se compone encima, sin caja ni tarjeta.
+La portada compone la escena celeste como **una lámina única de proporción 3:2**, centrada en el viewport y dimensionada con `min(100%, 150svh − cabecera)`. Todo el hero —arte y texto— vive dentro de esa lámina como contenedor de consulta; las piezas se posicionan en porcentaje de la lámina y la tipografía escala en `cqw`. Así el conjunto conserva su proporción al cambiar el viewport, cosa que no ocurría cuando el arte dependía de `vh` y el texto de `vw`.
 
-- Wordmark «Quicio» centrado en Roman Serif, sobre el sol y el borde de la luna.
-- Descriptor «ESTUDIO INDEPENDIENTE» en JetBrains Mono, mayúsculas y tracking amplio.
-- Glyph de eje y arcos en SVG, separado del wordmark por un espacio controlado.
-- Divisor SVG de línea y punto ocre, alineado bajo el descriptor.
-- Frase italic al pie: «Un espacio para investigar, crear y publicar.»
-- Fila de disciplinas y coordenadas en la base, con un velo de papel que garantiza lectura sobre la luna.
-- Marcas de esquina SVG, no rasterizadas.
+El orden de capas, de fondo a frente, es: grano → órbita → sol → nebulosa → wordmark, descriptor y divisor → luna → frase → disciplinas. La luna tapa el arco inferior de la órbita; el sol queda detrás de la Q; la nebulosa nunca toca el wordmark.
+
+- Sol ocre: el PNG ya trae el borde limpio, así que no lleva máscara; se multiplica sobre el papel, se desatura y conserva su borde nítido. No lleva aro ni halo duro.
+- Luna: se oscurece y se funde en papel con una capa de papel recortada por la silueta del propio PNG, no con un velo a sangre. El arco de la órbita queda oculto porque la luna mantiene su opacidad.
+- Nebulosa: mancha tenue, desplazada a la derecha, con desenfoque y opacidad baja.
+- Grano: turbulencia propia del hero, más fibrosa que el ruido global, por encima del arte y por debajo del texto.
+- Wordmark «Quicio» en Roman Serif, centrado, con la Q emergiendo del sol.
+- Descriptor «ESTUDIO INDEPENDIENTE» en JetBrains Mono, peso 600, mayúsculas y tracking ≈0,65 em; más compacto que el wordmark.
+- Glyph de eje y arcos en SVG (100×150), trazo fino, separado del wordmark; símbolo definitivo, 15 % mayor que en la primera lámina.
+- Divisor SVG de 280 px con punto ocre de 9 px.
+- Frase italic al pie, sobre papel limpio: «Un espacio para investigar, crear y publicar.»
+- Bloque inferior en flujo: frase, disciplinas y coordenadas comparten columna, de modo que el pie nunca se solapa con la frase aunque las disciplinas rompan a dos líneas. En láminas de menos de 700 px de alto el pie se compacta a una línea y las coordenadas se ocultan.
+- Fila de disciplinas centrada, con separadores de barra; coordenadas en una línea discreta debajo. En móvil y en láminas de menos de 700 px de alto las coordenadas se ocultan del hero y permanecen en el footer.
+- Marcas de esquina SVG dentro de la lámina, no rasterizadas.
+
+Objetivos de la lámina a 1536×1024: órbita 722 px, sol ≈230 px de disco visible, wordmark ≈505 px, descriptor ≈320 px, divisor 280 px, luna ≈930 px de ancho visible y glyph ≈139 px de ancho.
 
 ### Cabecera
 
 Barra sticky de papel sólido, línea inferior capilar. Isotipo + wordmark + descriptor; navegación mono con índices; contacto entre corchetes. En móvil se reemplaza por un `<details>` nativo («Índice») que no necesita JavaScript.
+
+En la portada la cabecera usa una **variante superpuesta**: `position: absolute`, sin fondo ni línea inferior, apoyada sobre la lámina. Se desplaza con la portada y deja de ser sticky; el resto de páginas conserva la barra sólida. El bloque central de la lámina reserva la altura de la cabecera para que la nav no tape el glyph.
 
 ### Footer
 
@@ -211,9 +222,11 @@ Placa generativa + número, estado, título, descriptor, resumen, relación con 
 
 Filas de registro, no tarjetas. Número, placa, título, resumen, tipo, estado y año. En móvil se ocultan placas y resúmenes secundarios para conservar la lectura.
 
-### Placas
+### Placas e imágenes de proyecto
 
-Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa una escena por capas, no una placa generada.
+Nueve familias de placa: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa una escena por capas, no una placa generada.
+
+Cuando el proyecto o el experimento aporta **arte propio verificable**, la ficha usa esa imagen en el marco de la placa, con el mismo recorte 4/3 (o el que fije el layout), el número y el estado. La placa generativa queda como respaldo para las fichas sin imagen. El arte procede del archivo del estudio —hoy, las ilustraciones de dispositivos de KNDL— y su origen se documenta en `docs/contenido.md`; no se admite fotografía de stock.
 
 ### Enlaces
 
@@ -278,6 +291,7 @@ El detector de Impeccable señala algunas decisiones que son deliberadas y forma
 - **Etiquetas numeradas sobre los titulares.** La numeración editorial (`02 / Proyectos`) es un recurso de archivo, no un eyebrow de SaaS. Ordena el recorrido y conecta con los índices de las publicaciones.
 - **Placas SVG extensas.** Las escenas de la portada y de los proyectos son diagramas generativos, no ilustraciones de relleno. Se generan con semilla y se documentan; no son capturas de stock.
 - **Roman Serif y Archivo.** Geliant e Imperator se descartaron por licencia. Roman Serif es la fuente indicada por el estudio para el wordmark y los titulares; Archivo aporta una lectura editorial específica. La procedencia de Roman Serif está documentada en `public/fonts/`.
+- **Fundido de la luna.** La luna no lleva un velo a sangre: el texto se apoya en una capa de papel recortada por la silueta del PNG. Es lo que permite conservar la textura lunar y, a la vez, el contraste AA de la frase y del pie.
 
 ## Anti-patrones rechazados
 
@@ -299,3 +313,6 @@ El detector de Impeccable señala algunas decisiones que son deliberadas y forma
 
 - 2026-11-24: sistema inicial. Roman Serif + Archivo + JetBrains Mono; paleta de papel y ocre; placas generativas; shell editorial; sitio Astro desplegable.
 - 2026-11-24: hero celeste recompuesto por capas: sol, luna y nebulosa limpios; órbita, glyph, divisor y marcas de esquina en SVG; Roman Serif en el wordmark.
+- 2026-11-24: lámina celeste 3:2 con coordenadas de contenedor; sol detrás del wordmark, luna fundida en papel sin velo, grano propio, pie centrado y cabecera superpuesta solo en la portada.
+- 2026-11-24: ajuste de la lámina: sol y luna +15 %, glyph +15 %, descriptor más compacto y en peso 600, y bloque inferior en flujo para evitar solapes en ventanas bajas.
+- 2026-11-24: símbolo definitivo (100×150) en hero, cabecera, footer, favicon y página de sistema: eje largo y arcos altos, sin pivote.

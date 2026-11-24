@@ -1,6 +1,8 @@
 ---
 import Base from "../../layouts/Base.astro";
 import ProjectPlate from "../../components/ProjectPlate.astro";
+import EntryImage from "../../components/EntryImage.astro";
+import { getExperimentImage } from "../../lib/content-image";
 import { getCollection, render, type CollectionEntry } from "astro:content";
 import { url } from "../../lib/url";
 
@@ -28,6 +30,8 @@ const previous = position > 0 ? all[position - 1] : null;
 const next = position < all.length - 1 ? all[position + 1] : null;
 
 const num = String(data.order).padStart(2, "0");
+const image = getExperimentImage(data.image);
+const imageAlt = data.imageAlt ?? "";
 const external = data.link?.startsWith("http") ?? false;
 const linkHref = data.link?.startsWith("/") ? url(data.link) : data.link;
 ---
@@ -78,12 +82,24 @@ const linkHref = data.link?.startsWith("/") ? url(data.link) : data.link;
           }
         </div>
 
-        <div class="experiment__plate">
-          <ProjectPlate
-            variant={data.plate}
-            seed={data.seed}
-            label={`/ ${num}`}
-          />
+        <div class:list={["experiment__plate", { "experiment__plate--image": image }]}>
+          {
+            image ? (
+              <>
+                <EntryImage
+                  src={image}
+                  alt={imageAlt}
+                  sizes="(max-width: 900px) 100vw, 45vw"
+                  loading="eager"
+                />
+                <span class="experiment__plate-index" aria-hidden="true">
+                  / {num}
+                </span>
+              </>
+            ) : (
+              <ProjectPlate variant={data.plate} seed={data.seed} label={`/ ${num}`} />
+            )
+          }
         </div>
       </header>
 
@@ -218,6 +234,25 @@ const linkHref = data.link?.startsWith("/") ? url(data.link) : data.link;
 
   .experiment__plate {
     aspect-ratio: 4 / 3.2;
+    position: relative;
+  }
+
+  .experiment__plate--image {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--dark);
+  }
+
+  .experiment__plate-index {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.9rem;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 229, 0.72);
   }
 
   .experiment__body {

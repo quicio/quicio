@@ -15,6 +15,8 @@ linkLabel: Abrir Paramétrica
 repo: https://github.com/quicio/parametrica
 plate: orbit
 seed: 5
+image: parametrica.jpg
+imageAlt: "Cinta de luz en forma de ocho sobre fondo negro"
 ---
 
 Paramétrica permite descubrir formas monolineales continuas explorando ecuaciones, armónicos y rangos de parámetros. No es un editor de ilustración: es un espacio de búsqueda donde cada variación deja ver la estructura que la produce.

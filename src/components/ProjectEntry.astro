@@ -1,6 +1,8 @@
 ---
 import { render, type CollectionEntry } from "astro:content";
 import ProjectPlate from "./ProjectPlate.astro";
+import EntryImage from "./EntryImage.astro";
+import { getProjectImage } from "../lib/content-image";
 import { url } from "../lib/url";
 
 interface Props {
@@ -18,15 +20,34 @@ const primary = data.link ?? data.repo;
 const primaryHref = primary?.startsWith("/") ? url(primary) : primary;
 const externalPrimary = primary?.startsWith("http") ?? false;
 const isFeatured = layout === "featured" || layout === "wide";
+const image = getProjectImage(data.image);
+const imageAlt = data.imageAlt ?? "";
+const imageSizes =
+  layout === "compact"
+    ? "9rem"
+    : "(max-width: 900px) 100vw, (max-width: 1120px) 42vw, 40vw";
+const imageWidths = layout === "compact" ? [240, 480] : [480, 720, 1000];
 ---
 
 <article class:list={["project", `project--${layout}`]} id={project.id}>
-  <div class="project__plate">
-    <ProjectPlate
-      variant={data.plate}
-      seed={data.seed}
-      label={`/ ${num}`}
-    />
+  <div class:list={["project__plate", { "project__plate--image": image }]}>
+    {
+      image ? (
+        <>
+          <EntryImage
+            src={image}
+            alt={imageAlt}
+            sizes={imageSizes}
+            widths={imageWidths}
+          />
+          <span class="project__plate-index" aria-hidden="true">
+            / {num}
+          </span>
+        </>
+      ) : (
+        <ProjectPlate variant={data.plate} seed={data.seed} label={`/ ${num}`} />
+      )
+    }
   </div>
 
   <div class="project__content">
@@ -126,6 +147,25 @@ const isFeatured = layout === "featured" || layout === "wide";
   .project__plate {
     aspect-ratio: 4 / 3;
     min-height: 0;
+    position: relative;
+  }
+
+  .project__plate--image {
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--dark);
+  }
+
+  .project__plate-index {
+    position: absolute;
+    left: 1rem;
+    bottom: 0.9rem;
+    z-index: 1;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(240, 237, 229, 0.72);
   }
 
   .project--featured .project__plate {

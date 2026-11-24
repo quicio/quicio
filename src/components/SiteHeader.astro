@@ -3,6 +3,12 @@ import Logo from "./Logo.astro";
 import { navegacion } from "../data/sitio";
 import { url } from "../lib/url";
 
+interface Props {
+  overlay?: boolean;
+}
+
+const { overlay = false } = Astro.props;
+
 const path = Astro.url.pathname;
 const isActive = (href: string) => path === href || path.startsWith(href);
 
@@ -11,7 +17,7 @@ function number(index: number) {
 }
 ---
 
-<header class="site-header">
+<header class:list={["site-header", { "site-header--overlay": overlay }]}>
   <div class="container site-header__inner">
     <div class="site-header__brand-wrap">
       <a class="site-header__brand" href={url("/")}>
@@ -100,6 +106,16 @@ function number(index: number) {
     z-index: var(--z-header);
     background: var(--paper);
     border-bottom: 1px solid var(--line);
+  }
+
+  /* Portada: la cabecera se apoya en la lámina y se va con ella. */
+  .site-header--overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: transparent;
+    border-bottom-color: transparent;
   }
 
   .site-header__inner {

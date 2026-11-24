@@ -30,6 +30,8 @@ const proyectos = defineCollection({
     repo: z.string().url().optional(),
     plate: plate.default("orbit"),
     seed: z.number().default(1),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
     featured: z.boolean().default(false),
     publicSurface: z.boolean().default(true),
   }),
@@ -55,6 +57,8 @@ const experimentos = defineCollection({
     linkLabel: z.string().default("Ver prototipo"),
     plate: plate.default("wave"),
     seed: z.number().default(1),
+    image: z.string().optional(),
+    imageAlt: z.string().optional(),
   }),
 });
 

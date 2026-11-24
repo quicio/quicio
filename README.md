@@ -80,6 +80,7 @@ openspec/
 docs/
   identidad.md         # concepto, voz y relación con proyectos
   contenido.md         # cómo editar el sitio
+  backlog-diseno.md    # hallazgos de diseño con evidencia y estado
 DESIGN.md              # sistema visual y tokens
 PRODUCT.md             # verdad de producto
 AGENTS.md              # reglas para agentes

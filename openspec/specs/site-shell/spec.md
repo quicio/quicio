@@ -8,7 +8,7 @@ Define el shell institucional compartido por todas las páginas: cabecera, naveg
 
 ### Requirement: Cabecera institucional
 
-Todas las páginas SHALL mostrar una cabecera con el logotipo de Quicio, el descriptor «Estudio independiente» y la navegación principal. La cabecera SHALL mantener un fondo marfil sólido y una línea inferior capilar, sin blur ni transparencias decorativas.
+Todas las páginas SHALL mostrar una cabecera con el logotipo de Quicio, el descriptor «Estudio independiente» y la navegación principal. Por defecto la cabecera SHALL mantener un fondo marfil sólido, una línea inferior capilar y comportamiento sticky, sin blur ni transparencias decorativas. La portada SHALL usar una variante superpuesta: sin fondo, sin línea inferior y desplazándose con la lámina.
 
 #### Scenario: Navegación de escritorio
 
@@ -21,6 +21,19 @@ Todas las páginas SHALL mostrar una cabecera con el logotipo de Quicio, el desc
 - **WHEN** la página se renderiza en un viewport móvil y JavaScript está deshabilitado
 - **THEN** existe un control nativo de índice que despliega los mismos destinos de navegación
 - **AND** todos los enlaces son alcanzables por teclado
+
+#### Scenario: Portada superpuesta
+
+- **WHEN** el visitante abre `/`
+- **THEN** la cabecera se apoya sobre la lámina sin fondo sólido ni línea inferior
+- **AND** la navegación se desplaza con la portada en lugar de quedar fija
+- **AND** ningún texto de la lámina queda oculto bajo la cabecera
+
+#### Scenario: Resto del sitio
+
+- **WHEN** el visitante abre cualquier página distinta de la portada
+- **THEN** la cabecera conserva fondo marfil sólido, línea capilar y comportamiento sticky
+- **AND** el contenido no se desplaza por debajo de ella
 
 ### Requirement: Footer editorial
 

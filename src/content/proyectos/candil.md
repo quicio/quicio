@@ -14,6 +14,8 @@ linkLabel: Abrir Candil
 repo: https://github.com/quicio/candil
 plate: aperture
 seed: 4
+image: candil.jpg
+imageAlt: "Hojas de papel superpuestas sobre fondo negro"
 ---
 
 Candil es un lector de EPUB escrito en Rust, sin webview ni motor HTML. Una sola columna, scroll continuo, tipografía cuidada y una biblioteca que indexa carpetas sin copiar los libros.

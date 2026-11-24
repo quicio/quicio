@@ -14,6 +14,8 @@ linkLabel: Abrir Espiral
 repo: https://github.com/quicio/espiral
 plate: orbit
 seed: 12
+image: espiral.jpg
+imageAlt: "Espiral de líneas finas sobre fondo negro"
 ---
 
 Espiral es un instrumento para construir sistemas que producen música. Tiene dieciséis tracks, escenas, probabilidad por paso, parameter locks y un motor modular que permite que las reglas cambien mientras la performance ocurre.

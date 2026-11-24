@@ -6,49 +6,36 @@ interface Props {
 }
 
 const { size = 28, title, class: className = "" } = Astro.props;
+
+const width = typeof size === "number" ? Math.round((size * 2) / 3) : size;
 ---
 
 <svg
   class:list={["mark", className]}
-  width={size}
+  width={width}
   height={size}
-  viewBox="0 0 64 64"
+  viewBox="0 0 100 150"
   fill="none"
   role={title ? "img" : undefined}
   aria-hidden={title ? undefined : "true"}
   focusable="false"
 >
   {title && <title>{title}</title>}
-  <path
-    d="M32 4.5v55"
+  <g
     stroke="currentColor"
-    stroke-width="1.35"
-    stroke-linecap="square"></path>
-  <path
-    d="M32 31.5C32 19.4 23.9 12.8 11.5 12.8"
-    stroke="currentColor"
-    stroke-width="1.35"
-    stroke-linecap="square"></path>
-  <path
-    d="M32 31.5C32 19.4 40.1 12.8 52.5 12.8"
-    stroke="currentColor"
-    stroke-width="1.35"
-    stroke-linecap="square"></path>
-  <circle class="mark__pivot" cx="32" cy="31.5" r="2.2"></circle>
+    stroke-width="3.1"
+    stroke-linecap="butt"
+    stroke-linejoin="round"
+  >
+    <path d="M50 0V150"></path>
+    <path d="M50 31C50 54 37 76 10 88"></path>
+    <path d="M50 31C50 54 63 76 90 88"></path>
+  </g>
 </svg>
 
 <style>
   .mark {
     overflow: visible;
     flex: none;
-  }
-
-  .mark__pivot {
-    fill: var(--ochre);
-  }
-
-  :global(.surface-dark) .mark__pivot,
-  :global(.footer) .mark__pivot {
-    fill: var(--ochre-soft);
   }
 </style>

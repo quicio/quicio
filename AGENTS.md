@@ -10,6 +10,7 @@ Leer en este orden:
 4. `docs/identidad.md` — concepto, voz y relación con los proyectos.
 5. `PRODUCT.md` — verdad de producto.
 6. La spec de la capacidad en `openspec/specs/` y el cambio activo en `openspec/changes/`.
+7. `docs/backlog-diseno.md` — hallazgos de diseño abiertos, con evidencia y estado.
 
 ## Comandos
 
@@ -45,6 +46,7 @@ npm run verify
 - Cada cambio es un vertical slice desplegable: propuesta → specs → diseño → tareas → implementación → verificación → archivo.
 - Las tareas se marcan solo con evidencia de ejecución.
 - Las capturas de revisión viven en `.impeccable/review/` y no se commitean.
+- Los hallazgos de revisión que no entren en el cambio se registran en `docs/backlog-diseno.md` con evidencia y estado.
 - Las decisiones visuales se documentan; las excepciones al detector se explican en `DESIGN.md`.
 
 ## Fuentes y assets

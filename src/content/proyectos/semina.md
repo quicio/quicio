@@ -14,6 +14,8 @@ link: https://semina.quicio.qzz.io/
 linkLabel: Abrir Semina
 plate: semina
 seed: 31
+image: semina.jpg
+imageAlt: "Árbol de ramas blancas sobre fondo negro"
 featured: true
 ---
 

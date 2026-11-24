@@ -10,6 +10,8 @@ link: https://github.com/hugomoraga/umbral-vision
 linkLabel: Ver repositorio
 plate: wave
 seed: 22
+image: umbral-vision.jpg
+imageAlt: "Nebulosa de partículas sobre fondo negro"
 ---
 
 Umbral Vision nació como un conjunto de visuales para música en vivo y creció hasta convertirse en un framework modular: quince efectos en p5.js, un motor GPU con cuatro familias visuales, audio reactivo, presets y un modo inmersivo.
