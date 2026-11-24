@@ -46,6 +46,8 @@ npm run format         # Prettier
 
 ```
 src/
+  assets/
+    fonts/             # woff2 autoalojados
   components/          # shell, marca, placas, filas editoriales
   content/
     proyectos/         # fichas Markdown de proyectos
@@ -62,13 +64,14 @@ src/
     tokens.css
     base.css
 public/
-  fonts/               # woff2 y licencias
+  fonts/               # licencias de fuentes
   archivo/             # artefactos históricos
   favicon.svg
   og.png
   CNAME
 scripts/
   check-links.mjs
+  build-og.sh
   og.html              # fuente de la imagen social
 openspec/
   specs/               # capacidades vigentes

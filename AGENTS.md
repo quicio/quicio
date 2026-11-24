@@ -49,7 +49,7 @@ npm run verify
 
 ## Fuentes y assets
 
-- Fuentes autoalojadas en `public/fonts/` con sus licencias.
+- Fuentes autoalojadas en `src/assets/fonts/`; las licencias viven en `public/fonts/`.
 - Placas SVG generativas en componentes; no usar fotografía de stock.
 - La imagen social se genera desde `scripts/og.html`.
 - El sitio anterior se conserva como artefacto en `public/archivo/sitio-2026/original/`; no editar su contenido salvo para corregir rutas o metadatos.
