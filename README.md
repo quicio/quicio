@@ -48,7 +48,7 @@ npm run format         # Prettier
 src/
   assets/
     fonts/             # woff2 autoalojados
-    images/            # lámina celeste del hero
+    images/            # capas del hero y lámina para OG
   components/          # shell, marca, placas, filas editoriales
   content/
     proyectos/         # fichas Markdown de proyectos

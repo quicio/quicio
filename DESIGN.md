@@ -181,13 +181,15 @@ Los metadatos funcionales no bajan de 11 px. Las etiquetas decorativas que son p
 
 ### Hero de portada
 
-La portada usa una **lámina celeste transparente** provista como material de identidad: sol ocre, luna, galaxia, arcos, cruces y una marca de eje en el centro. Se coloca como fondo centrado, a sangre, sobre el marfil; el texto se compone encima, sin caja ni tarjeta.
+La portada compone la escena celeste **por capas separadas**: sol ocre, luna craterizada, nebulosa, órbita SVG, glyph SVG, divisor SVG y marcas de esquina SVG. La escena se centra y se recorta como un fondo a sangre; el texto se compone encima, sin caja ni tarjeta.
 
 - Wordmark «Quicio» centrado en Roman Serif, sobre el sol y el borde de la luna.
 - Descriptor «ESTUDIO INDEPENDIENTE» en JetBrains Mono, mayúsculas y tracking amplio.
-- Línea divisoria y punto ocre tomados de la propia lámina.
+- Glyph de eje y arcos en SVG, separado del wordmark por un espacio controlado.
+- Divisor SVG de línea y punto ocre, alineado bajo el descriptor.
 - Frase italic al pie: «Un espacio para investigar, crear y publicar.»
 - Fila de disciplinas y coordenadas en la base, con un velo de papel que garantiza lectura sobre la luna.
+- Marcas de esquina SVG, no rasterizadas.
 
 ### Cabecera
 
@@ -211,7 +213,7 @@ Filas de registro, no tarjetas. Número, placa, título, resumen, tipo, estado y
 
 ### Placas
 
-Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa la lámina celeste provista, no una placa generada.
+Seis familias: `semina` (semilla/raíz), `rizoma` (red), `intersticio` (apertura), `orbit`, `wave`, `grid`, `branch`, `network`, `aperture`. Se generan con semilla en build y comparten fondo `--dark`, líneas marfil y un acento ocre. La portada usa una escena por capas, no una placa generada.
 
 ### Enlaces
 
@@ -296,3 +298,4 @@ El detector de Impeccable señala algunas decisiones que son deliberadas y forma
 ## Changelog
 
 - 2026-11-24: sistema inicial. Roman Serif + Archivo + JetBrains Mono; paleta de papel y ocre; placas generativas; shell editorial; sitio Astro desplegable.
+- 2026-11-24: hero celeste recompuesto por capas: sol, luna y nebulosa limpios; órbita, glyph, divisor y marcas de esquina en SVG; Roman Serif en el wordmark.
