@@ -36,8 +36,8 @@
 
   /* Tipografía ----------------------------------------------- */
   --font-display:
-    "Fraunces Variable", "Fraunces", "Iowan Old Style", "Palatino Linotype",
-    Palatino, Georgia, serif;
+    "Roman Serif", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+    serif;
   --font-sans:
     "Archivo Variable", "Archivo", system-ui, -apple-system, "Segoe UI",
     sans-serif;
@@ -58,7 +58,6 @@
   --tracking-label: 0.16em;
   --tracking-mono: 0.045em;
   --tracking-display: -0.022em;
-  --display-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
 
   /* Espacio -------------------------------------------------- */
   --space-3xs: 0.25rem;

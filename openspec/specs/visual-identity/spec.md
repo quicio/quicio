@@ -60,22 +60,6 @@ El sitio SHALL limitar el movimiento a transiciones de enlace, revelados suaves 
 - **THEN** no hay animaciones orbitales, desplazamientos ni revelados
 - **AND** todo el contenido sigue visible y navegable
 
-### Requirement: Serif display con licencia verificable
-
-La identidad SHALL usar una serif display con licencia verificable para el wordmark y los titulares. La implementación SHALL usar Fraunces (SIL OFL) con los ejes `SOFT` y `WONK` para conservar el gesto expresivo del wordmark de referencia.
-
-#### Scenario: Wordmark y titulares
-
-- **WHEN** se renderiza el wordmark o un titular
-- **THEN** usan Fraunces con `opsz` alto y `WONK` activo
-- **AND** la fuente se sirve desde el propio sitio, no desde Google Fonts
-
-#### Scenario: Fuente sin licencia
-
-- **WHEN** se evalúa una fuente de demostración o sin licencia web declarada
-- **THEN** no se incorpora al build ni se publica
-- **AND** la decisión se documenta en `DESIGN.md`
-
 ### Requirement: Descriptor en monoespaciada
 
 El descriptor institucional «Estudio independiente» SHALL componerse en JetBrains Mono, en mayúsculas y con tracking amplio, tanto en la cabecera como en el hero.
@@ -85,3 +69,25 @@ El descriptor institucional «Estudio independiente» SHALL componerse en JetBra
 - **WHEN** se lee el descriptor debajo del wordmark
 - **THEN** está en JetBrains Mono, mayúsculas y tracking amplio
 - **AND** no usa la serif del wordmark
+
+### Requirement: Serif display institucional
+
+La identidad SHALL usar **Roman Serif** (m klein fonteria, 2004) para el wordmark y los titulares. La fuente SHALL servirse desde el propio sitio. El repositorio SHALL documentar su titular, la ausencia de un texto de licencia web en el archivo y la necesidad de confirmar el permiso de uso antes de redistribuirla.
+
+#### Scenario: Wordmark y titulares
+
+- **WHEN** se renderiza el wordmark o un titular
+- **THEN** usan Roman Serif en peso regular
+- **AND** la fuente se sirve desde `src/assets/fonts/`, no desde Google Fonts
+
+#### Scenario: Procedencia documentada
+
+- **WHEN** se revisa la licencia de la fuente
+- **THEN** `public/fonts/LICENSE-romanserif.txt` declara el titular y la condición pendiente
+- **AND** `DESIGN.md` registra la decisión y el riesgo
+
+#### Scenario: Cursiva
+
+- **WHEN** se compone la frase italic del hero o una cita
+- **THEN** se usa Roman Serif Oblique
+- **AND** no se simula la cursiva con transformaciones

@@ -10,7 +10,7 @@ export const sitio = {
   coordenadas: "33.45° S / 70.66° O",
   anio: "2026",
   colofon:
-    "Fraunces, Archivo y JetBrains Mono. Papel marfil, tinta carbón y una señal de ocre.",
+    "Roman Serif, Archivo y JetBrains Mono. Papel marfil, tinta carbón y una señal de ocre.",
 } as const;
 
 export const navegacion = [

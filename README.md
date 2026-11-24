@@ -18,7 +18,7 @@ Primera versión del sitio Astro. Incluye portada, catálogo de proyectos activo
 - **Astro 7** en modo estático.
 - **Content collections** con Markdown y esquemas Zod.
 - **CSS propio** con tokens; sin framework de UI ni utility-first.
-- **Fuentes autoalojadas**: Fraunces, Archivo y JetBrains Mono.
+- **Fuentes autoalojadas**: Roman Serif, Archivo y JetBrains Mono.
 - **GitHub Pages** con `CNAME` para `quicio.org`.
 - **OpenSpec** para el desarrollo guiado por especificaciones.
 - **Impeccable** como skill de diseño, crítica y documentación.
@@ -101,7 +101,7 @@ Los proyectos no tienen página interna en Quicio: cada ficha enlaza a la págin
 La identidad se documenta en [`DESIGN.md`](DESIGN.md) y se puede consultar en `/sistema/`. La idea central es **la cámara clara**: pasar de la cámara de niebla de KNDL a un espacio de papel y luz, sin perder la sensibilidad editorial.
 
 - Marfil `#F0EDE5`, carbón `#242321`, ocre `#B77A35`, verde mineral `#78816D`.
-- Fraunces para la voz; Archivo para leer; JetBrains Mono para medir.
+- Roman Serif para la voz; Archivo para leer; JetBrains Mono para medir.
 - Placas SVG generativas, sin fotografía de stock.
 - Semina y Rizoma conservan sus isotipos, estructuras y personalidades. Quicio solo comparte gramática.
 
@@ -177,7 +177,7 @@ openspec archive <nombre>
 
 ## Créditos
 
-- Tipografías: Fraunces (SIL OFL), Archivo (SIL OFL), JetBrains Mono (SIL OFL). Licencias en `public/fonts/`.
+- Tipografías: Roman Serif (m klein fonteria, 2004; licencia de uso web a confirmar), Archivo (SIL OFL) y JetBrains Mono (SIL OFL). Licencias y notas en `public/fonts/`.
 - Contenido y proyecto: Quicio.
 - El sitio anterior de 2026 se conserva en `/archivo/sitio-2026/original/`.
 

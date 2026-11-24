@@ -1,0 +1,7 @@
+Roman Serif / Roman Serif Oblique
+Copyright (c) 2004, m klein fonteria. All rights reserved.
+Version 1.0 (2004-10-15 / 2004-10-16).
+
+El archivo original no incluye un texto de licencia de uso web.
+Se incorpora por indicación del estudio Quicio. Confirmar los derechos de
+uso y distribución con el proveedor antes de redistribuir la fuente.
