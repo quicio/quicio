@@ -1,0 +1,223 @@
+---
+import Logo from "./Logo.astro";
+import { sitio } from "../data/sitio";
+
+const anio = new Date().getFullYear();
+---
+
+<footer class="footer surface-dark">
+  <div class="container">
+    <div class="footer__top">
+      <div class="footer__brand">
+        <Logo variant="stacked" tone="paper" />
+        <p class="footer__phrase">{sitio.frase}</p>
+        <p class="footer__note">
+          Un espacio independiente donde las ideas pueden convertirse en
+          herramientas, publicaciones, investigaciones y obras.
+        </p>
+      </div>
+
+      <div class="footer__columns">
+        <div class="footer__column">
+          <p class="footer__label">Secciones</p>
+          <ul>
+            <li><a href="/proyectos/">Proyectos</a></li>
+            <li><a href="/experimentos/">Experimentos</a></li>
+            <li><a href="/archivo/">Archivo</a></li>
+            <li><a href="/acerca/">Acerca</a></li>
+            <li><a href="/contacto/">Contacto</a></li>
+          </ul>
+        </div>
+
+        <div class="footer__column">
+          <p class="footer__label">Ecosistema</p>
+          <ul>
+            <li>
+              <a href="https://semina.quicio.qzz.io/" target="_blank" rel="noreferrer">
+                Semina <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://kndl.quicio.qzz.io/rizoma/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Rizoma <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://quicio.github.io/intersticio/"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Intersticio <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+            <li>
+              <a href={sitio.github} target="_blank" rel="noreferrer">
+                GitHub <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer__column">
+          <p class="footer__label">Contacto</p>
+          <ul>
+            <li><a href={`mailto:${sitio.email}`}>{sitio.email}</a></li>
+            <li>{sitio.lugar}</li>
+            <li class="footer__coords">{sitio.coordenadas}</li>
+          </ul>
+        </div>
+
+        <div class="footer__column">
+          <p class="footer__label">Sistema</p>
+          <ul>
+            <li><a href="/sistema/">Identidad y colofón</a></li>
+            <li><a href="/archivo/">Archivo del estudio</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <p class="footer__mono">© {anio} Quicio</p>
+      <p class="footer__mono">Estudio independiente</p>
+      <p class="footer__mono footer__colophon">{sitio.colofon}</p>
+      <a class="footer__up" href="#top">Volver arriba <span aria-hidden="true">↑</span></a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    padding-block: var(--space-2xl) var(--space-md);
+    margin-top: var(--space-xl);
+  }
+
+  .footer__top {
+    display: grid;
+    grid-template-columns: minmax(14rem, 1.15fr) minmax(0, 1.85fr);
+    gap: clamp(2.5rem, 7vw, 7rem);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .footer__phrase {
+    margin-top: var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--ochre-soft);
+  }
+
+  .footer__note {
+    margin-top: var(--space-sm);
+    max-width: 30ch;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--dark-muted);
+  }
+
+  .footer__columns {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: var(--space-md);
+  }
+
+  .footer__label {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+    color: var(--ochre-soft);
+    margin-bottom: var(--space-sm);
+  }
+
+  .footer__column ul {
+    display: grid;
+    gap: 0.55rem;
+    font-size: var(--text-sm);
+    color: var(--dark-muted);
+  }
+
+  .footer__column a {
+    text-decoration: none;
+    color: var(--dark-ink);
+  }
+
+  .footer__column a:hover {
+    color: var(--ochre-soft);
+  }
+
+  .footer__coords {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    color: var(--dark-faint);
+  }
+
+  .footer__bottom {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm) var(--space-md);
+    padding-top: var(--space-md);
+  }
+
+  .footer__mono {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--dark-faint);
+  }
+
+  .footer__colophon {
+    max-width: 34rem;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    line-height: 1.5;
+  }
+
+  .footer__up {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--dark-ink);
+    white-space: nowrap;
+  }
+
+  .footer__up span {
+    color: var(--ochre-soft);
+  }
+
+  @media (max-width: 1000px) {
+    .footer__top {
+      grid-template-columns: 1fr;
+    }
+
+    .footer__columns {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-lg) var(--space-md);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .footer__columns {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .footer__bottom {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+</style>

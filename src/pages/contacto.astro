@@ -1,0 +1,298 @@
+---
+import Base from "../layouts/Base.astro";
+import { getEntry, render } from "astro:content";
+import { correoAsuntos, sitio } from "../data/sitio";
+
+const contacto = await getEntry("paginas", "contacto");
+
+if (!contacto) {
+  throw new Error("Falta el contenido de la página Contacto.");
+}
+
+const { Content } = await render(contacto);
+const email = contacto.data.email ?? sitio.email;
+---
+
+<Base
+  title="Contacto"
+  description={contacto.data.description}
+  image="/og.png"
+>
+  <header class="contact-hero">
+    <div class="container contact-hero__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">02</span>
+          <span>{contacto.data.eyebrow}</span>
+        </p>
+        <h1 class="contact-hero__title">{contacto.data.title}</h1>
+        <p class="contact-hero__lead">{contacto.data.lead}</p>
+      </div>
+
+      <div class="contact-hero__action">
+        <p class="label">Correo directo</p>
+        <a class="contact-hero__email" href={`mailto:${email}`}>{email}</a>
+        <p class="contact-hero__note">
+          Sin formulario, sin embudo, sin respuesta automática. Escribe una
+          persona.
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="contact-options section" aria-labelledby="contact-options-title">
+    <div class="container">
+      <div class="contact-options__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">03</span>
+          <span>Motivos</span>
+        </p>
+        <h2 id="contact-options-title">Elige una puerta.</h2>
+      </div>
+
+      <div class="contact-options__grid">
+        {
+          correoAsuntos.map((option, index) => (
+            <a
+              class="contact-option"
+              href={`mailto:${email}?subject=${encodeURIComponent(option.asunto)}`}
+            >
+              <span class="contact-option__index" aria-hidden="true">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <span class="contact-option__label">{option.label}</span>
+              <span class="contact-option__text">{option.descripcion}</span>
+              <span class="contact-option__arrow" aria-hidden="true">↗</span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-body section">
+    <div class="container contact-body__grid">
+      <div class="contact-body__aside">
+        <p class="eyebrow">
+          <span class="eyebrow__index">04</span>
+          <span>Antes de escribir</span>
+        </p>
+        <p class="contact-body__quote">
+          «Una conversación también puede ser una forma de colaboración.»
+        </p>
+        <ul class="contact-body__links">
+          <li><a href={sitio.github} target="_blank" rel="noreferrer">GitHub ↗</a></li>
+          <li><a href="/proyectos/">Proyectos</a></li>
+          <li><a href="/acerca/">Acerca de Quicio</a></li>
+        </ul>
+      </div>
+
+      <div class="contact-body__content prose">
+        <Content />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .contact-hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.15fr) minmax(15rem, 0.85fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .contact-hero__title {
+    max-width: 11ch;
+    margin-top: var(--space-md);
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.8;
+  }
+
+  .contact-hero__lead {
+    max-width: 40ch;
+    margin-top: var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1.08;
+    color: var(--ochre-deep);
+  }
+
+  .contact-hero__action {
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .contact-hero__action .label {
+    color: var(--ochre-deep);
+  }
+
+  .contact-hero__email {
+    display: inline-block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(1.6rem, 3.4vw, 2.8rem);
+    line-height: 1;
+    text-decoration: none;
+    color: var(--ink);
+    border-bottom: 1px solid var(--ochre);
+  }
+
+  .contact-hero__email:hover {
+    color: var(--ochre-deep);
+  }
+
+  .contact-hero__note {
+    max-width: 32ch;
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .contact-options {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .contact-options__head {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+    padding-bottom: var(--space-lg);
+  }
+
+  .contact-options__head h2 {
+    font-size: var(--display-sm);
+  }
+
+  .contact-options__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .contact-option {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+    min-height: 15rem;
+    padding: var(--space-md);
+    border-right: 1px solid var(--line);
+    text-decoration: none;
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .contact-option:first-child {
+    border-left: 1px solid var(--line);
+  }
+
+  .contact-option:hover {
+    background: rgba(183, 122, 53, 0.045);
+    color: var(--ink);
+  }
+
+  .contact-option__index {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ochre-deep);
+  }
+
+  .contact-option__label {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1;
+  }
+
+  .contact-option__text {
+    max-width: 28ch;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  .contact-option__arrow {
+    position: absolute;
+    right: var(--space-md);
+    bottom: var(--space-md);
+    color: var(--ochre-deep);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .contact-option:hover .contact-option__arrow {
+    transform: translate(0.2rem, -0.2rem);
+  }
+
+  .contact-body__grid {
+    display: grid;
+    grid-template-columns: minmax(12rem, 0.34fr) minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: start;
+  }
+
+  .contact-body__aside {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .contact-body__quote {
+    max-width: 16ch;
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-style: italic;
+    line-height: 1.1;
+    color: var(--ochre-deep);
+  }
+
+  .contact-body__links {
+    display: grid;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.05em;
+  }
+
+  .contact-body__links a {
+    text-decoration: none;
+  }
+
+  .contact-body__content {
+    max-width: 62ch;
+  }
+
+  @media (max-width: 1000px) {
+    .contact-hero__grid,
+    .contact-options__head,
+    .contact-body__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .contact-body__aside {
+      position: static;
+    }
+  }
+
+  @media (max-width: 760px) {
+    .contact-options__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .contact-option,
+    .contact-option:first-child {
+      min-height: 0;
+      border-left: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+  }
+</style>

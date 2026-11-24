@@ -1,0 +1,546 @@
+---
+import Base from "../layouts/Base.astro";
+import Logo from "../components/Logo.astro";
+import Mark from "../components/Mark.astro";
+import ProjectPlate from "../components/ProjectPlate.astro";
+
+const colores = [
+  { name: "Marfil cálido", token: "--paper", hex: "#F0EDE5", role: "Fondo predominante" },
+  { name: "Carbón", token: "--ink", hex: "#242321", role: "Texto y líneas" },
+  { name: "Gris piedra", token: "--stone", hex: "#77746D", role: "Metadatos y pausas" },
+  { name: "Ocre", token: "--ochre", hex: "#B77A35", role: "Señal y pivote" },
+  { name: "Superficie oscura", token: "--dark", hex: "#171817", role: "Placas y bandas" },
+  { name: "Verde mineral", token: "--green", hex: "#78816D", role: "Acento secundario" },
+];
+
+const placas = ["semina", "rizoma", "intersticio", "orbit", "wave", "grid"];
+---
+
+<Base
+  title="Sistema"
+  description="Sistema de identidad de Quicio: paleta, tipografía, marca, placas, retícula y relación con los proyectos."
+  noindex
+>
+  <header class="system-hero">
+    <div class="container system-hero__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">00</span>
+          <span>Colofón / sistema</span>
+        </p>
+        <h1 class="system-hero__title">Sistema</h1>
+        <p class="system-hero__lead">
+          Una gramática compartida, no una identidad impuesta.
+        </p>
+      </div>
+      <div class="system-hero__aside">
+        <p>
+          Esta página documenta las decisiones visuales que sostienen a Quicio.
+          Es un colofón operativo: los mismos tokens, la misma tipografía y las
+          mismas placas que usa el sitio.
+        </p>
+        <a
+          class="link-arrow"
+          href="https://github.com/quicio/quicio/blob/main/DESIGN.md"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Leer DESIGN.md
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="system-section section" aria-labelledby="paleta-title">
+    <div class="container">
+      <div class="system-section__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">01</span>
+          <span>Color</span>
+        </p>
+        <h2 id="paleta-title">Una paleta de papel y señal.</h2>
+      </div>
+
+      <ul class="swatches">
+        {
+          colores.map((color) => (
+            <li class="swatch">
+              <span class="swatch__chip" style={`background:${color.hex}`}></span>
+              <span class="swatch__name">{color.name}</span>
+              <span class="swatch__hex mono">{color.hex}</span>
+              <span class="swatch__role">{color.role}</span>
+              <code>{color.token}</code>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="system-section system-section--dark surface-dark section" aria-labelledby="tipo-title">
+    <div class="container">
+      <div class="system-section__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">02</span>
+          <span>Tipografía</span>
+        </p>
+        <h2 id="tipo-title">Serif para la voz. Sans para leer. Mono para medir.</h2>
+      </div>
+
+      <div class="type-specimens">
+        <div class="type-specimen">
+          <p class="label">Display / Instrument Serif</p>
+          <p class="type-specimen__display">Quicio</p>
+          <p class="type-specimen__italic">Investigar, imaginar, construir.</p>
+        </div>
+        <div class="type-specimen">
+          <p class="label">Lectura / Archivo</p>
+          <p class="type-specimen__body">
+            Un espacio independiente donde las ideas pueden convertirse en
+            herramientas, publicaciones, investigaciones y obras. La interfaz se
+            retira para que el contenido pueda hablar.
+          </p>
+        </div>
+        <div class="type-specimen">
+          <p class="label">Meta / JetBrains Mono</p>
+          <p class="type-specimen__mono">
+            33.45° S / 70.66° O<br />
+            ESTADO: EN DESARROLLO<br />
+            ÍNDICE 04 / 06
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="system-section section" aria-labelledby="marca-title">
+    <div class="container">
+      <div class="system-section__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">03</span>
+          <span>Marca</span>
+        </p>
+        <h2 id="marca-title">El eje y el umbral.</h2>
+      </div>
+
+      <div class="logo-grid">
+        <div class="logo-card">
+          <Logo />
+          <p class="label">Lockup horizontal</p>
+        </div>
+        <div class="logo-card">
+          <div class="logo-card__mark">
+            <Mark size={72} />
+          </div>
+          <p class="label">Isotipo</p>
+        </div>
+        <div class="logo-card logo-card--dark surface-dark">
+          <Logo tone="paper" />
+          <p class="label">Sobre superficie oscura</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="system-section section" aria-labelledby="placas-title">
+    <div class="container">
+      <div class="system-section__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">04</span>
+          <span>Placas</span>
+        </p>
+        <h2 id="placas-title">Diagramas con propósito.</h2>
+        <p class="system-section__note">
+          Las placas se generan con semilla y variante. No son decoración: son
+          una forma de dar materia visual a proyectos que todavía no tienen
+          fotografía propia.
+        </p>
+      </div>
+
+      <div class="plate-grid">
+        {
+          placas.map((variant, index) => (
+            <div class="plate-card">
+              <ProjectPlate variant={variant} seed={index + 1} />
+              <p class="label">{variant}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="system-section section" aria-labelledby="relacion-title">
+    <div class="container">
+      <div class="system-section__head">
+        <p class="eyebrow">
+          <span class="eyebrow__index">05</span>
+          <span>Relación</span>
+        </p>
+        <h2 id="relacion-title">Qué se comparte y qué no.</h2>
+      </div>
+
+      <div class="relation-table">
+        <div class="relation-table__row relation-table__row--head mono">
+          <span></span>
+          <span>Quicio</span>
+          <span>Semina</span>
+          <span>Rizoma</span>
+        </div>
+        <div class="relation-table__row">
+          <span class="relation-table__label">Tipografía auxiliar</span>
+          <span>Sí</span>
+          <span>Sí</span>
+          <span>Sí</span>
+        </div>
+        <div class="relation-table__row">
+          <span class="relation-table__label">Paleta secundaria</span>
+          <span>Sí</span>
+          <span>Sí</span>
+          <span>Sí</span>
+        </div>
+        <div class="relation-table__row">
+          <span class="relation-table__label">Metadatos y retícula</span>
+          <span>Sí</span>
+          <span>Sí</span>
+          <span>Sí</span>
+        </div>
+        <div class="relation-table__row">
+          <span class="relation-table__label">Isotipo</span>
+          <span>Eje y arcos</span>
+          <span>Semilla / raíz</span>
+          <span>Nodo / red</span>
+        </div>
+        <div class="relation-table__row">
+          <span class="relation-table__label">Estructura de interfaz</span>
+          <span>Archivo editorial</span>
+          <span>Biblioteca y taller</span>
+          <span>Mapa y deriva</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="system-close section">
+    <div class="container system-close__grid">
+      <p class="eyebrow">
+        <span class="eyebrow__index">—</span>
+        <span>Colofón</span>
+      </p>
+      <p class="system-close__text">
+        Instrument Serif, Archivo y JetBrains Mono. Papel marfil, tinta carbón y
+        una señal de ocre. El sistema se documenta en el repositorio y se corrige
+        cuando el sitio cambia.
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .system-hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .system-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .system-hero__title {
+    margin-top: var(--space-md);
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.8;
+    margin-left: -0.045em;
+  }
+
+  .system-hero__lead {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ochre-deep);
+  }
+
+  .system-hero__aside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding-bottom: 0.5rem;
+  }
+
+  .system-hero__aside p {
+    max-width: 42ch;
+    color: var(--ink-soft);
+  }
+
+  .system-section__head {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .system-section--dark .system-section__head {
+    border-bottom-color: var(--line-dark);
+  }
+
+  .system-section__head h2 {
+    max-width: 18ch;
+    font-size: var(--display-sm);
+  }
+
+  .system-section__note {
+    max-width: 52ch;
+    margin-top: var(--space-sm);
+    color: var(--ink-muted);
+    grid-column: 2;
+  }
+
+  .swatches {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0;
+    margin-top: var(--space-lg);
+    border-top: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    padding: var(--space-md);
+    border-right: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .swatch__chip {
+    height: 5.5rem;
+    border: 1px solid var(--line-soft);
+    margin-bottom: var(--space-sm);
+  }
+
+  .swatch__name {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1;
+  }
+
+  .swatch__hex {
+    color: var(--ink-muted);
+  }
+
+  .swatch__role {
+    font-size: var(--text-xs);
+    color: var(--ink-muted);
+  }
+
+  .swatch code {
+    margin-top: 0.2rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ochre-deep);
+  }
+
+  .type-specimens {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr 0.75fr;
+    gap: var(--space-lg);
+    margin-top: var(--space-lg);
+  }
+
+  .type-specimen {
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .type-specimen .label {
+    color: var(--ochre-soft);
+  }
+
+  .type-specimen__display {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: clamp(4rem, 9vw, 8rem);
+    line-height: 0.8;
+  }
+
+  .type-specimen__italic {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1.05;
+    color: var(--ochre-soft);
+  }
+
+  .type-specimen__body {
+    max-width: 38ch;
+    margin-top: var(--space-md);
+    font-size: var(--text-base);
+    line-height: 1.65;
+    color: var(--dark-muted);
+  }
+
+  .type-specimen__mono {
+    margin-top: var(--space-md);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    line-height: 1.9;
+    letter-spacing: 0.06em;
+    color: var(--dark-muted);
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.6fr 1.2fr;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .logo-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-xl);
+    min-height: 12rem;
+    padding: var(--space-md);
+    border: 1px solid var(--line);
+  }
+
+  .logo-card .label {
+    color: var(--ink-muted);
+  }
+
+  .logo-card--dark {
+    border-color: var(--line-dark);
+  }
+
+  .logo-card--dark .label {
+    color: var(--dark-muted);
+  }
+
+  .logo-card__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .plate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .plate-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+
+  .plate-card .plate {
+    aspect-ratio: 4 / 3;
+  }
+
+  .plate-card .label {
+    color: var(--ink-muted);
+  }
+
+  .relation-table {
+    margin-top: var(--space-lg);
+    border-top: 1px solid var(--line-strong);
+  }
+
+  .relation-table__row {
+    display: grid;
+    grid-template-columns: 1.2fr 0.9fr 0.9fr 0.9fr;
+    gap: var(--space-sm);
+    padding-block: 0.8rem;
+    border-bottom: 1px solid var(--line);
+    font-size: var(--text-sm);
+    color: var(--ink-soft);
+  }
+
+  .relation-table__row--head {
+    color: var(--ink-muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .relation-table__label {
+    color: var(--ink-muted);
+  }
+
+  .system-close {
+    border-top: 1px solid var(--line);
+  }
+
+  .system-close__grid {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .system-close__text {
+    max-width: 48ch;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--ochre-deep);
+  }
+
+  @media (max-width: 1000px) {
+    .system-hero__grid,
+    .system-section__head,
+    .system-close__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .system-section__note {
+      grid-column: 1;
+    }
+
+    .swatches {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .type-specimens,
+    .logo-grid,
+    .plate-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .logo-card {
+      min-height: 9rem;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .swatches {
+      grid-template-columns: 1fr;
+    }
+
+    .relation-table__row {
+      grid-template-columns: 1fr 1fr;
+      gap: 0.35rem;
+    }
+
+    .relation-table__row--head span:first-child {
+      display: none;
+    }
+  }
+</style>

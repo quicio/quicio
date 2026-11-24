@@ -1,0 +1,71 @@
+schema: spec-driven
+
+context: |
+  Language: es
+  All artifacts must be written in es.
+  Keep OpenSpec structural headings and SHALL/MUST keywords in English.
+
+  Project: Quicio — sitio institucional de un estudio independiente.
+  Domain: https://quicio.org
+  Repository: quicio/quicio
+  Stack: Astro 7 estático, content collections Markdown + Zod, CSS propio,
+  fuentes autoalojadas, GitHub Pages, sin framework de UI ni backend.
+  Runtime: Node >= 22. Build: npm run build. Verify: npm run verify.
+
+  Contenido:
+  - src/content/proyectos: fichas de proyectos; enlazan a la superficie propia.
+  - src/content/experimentos: prototipos y procesos; tienen página propia.
+  - src/content/archivo: historial verificable; tiene página propia.
+  - src/content/paginas: inicio, acerca, contacto.
+  - src/data/sitio.ts: navegación, correo, coordenadas, disciplinas.
+  - src/styles/tokens.css: única fuente de tokens.
+
+  Identidad:
+  - Marfil #F0EDE5, carbón #242321, gris piedra #77746D, ocre #B77A35,
+    superficie oscura #171817, verde mineral #78816D.
+  - Instrument Serif (display), Archivo (lectura), JetBrains Mono (metadatos).
+  - Semina, Rizoma e Intersticio conservan su autonomía visual.
+  - No inventar equipo, clientes, métricas, fechas ni hitos.
+  - Evitar lenguaje corporativo.
+
+  Diseño:
+  - PRODUCT.md contiene la verdad de producto.
+  - DESIGN.md contiene tokens y criterios.
+  - Impeccable se usa como skill de diseño; las excepciones al detector se
+    documentan con una razón editorial.
+
+rules:
+  proposal:
+    - Escribir en español; conservar SHALL/MUST en inglés.
+    - Explicar el problema y el valor de la slice; no describir implementación.
+    - Declarar explícitamente lo que queda fuera de alcance.
+    - Identificar la capacidad nueva o modificada.
+  specs:
+    - Describir comportamiento observable, nunca clases, archivos o frameworks.
+    - Cada requisito debe tener al menos un escenario WHEN/THEN.
+    - No inventar requisitos para llenar una capacidad.
+    - Un requisito debe caber en una sola conducta.
+  design:
+    - Documentar la dirección de contenido, las rutas y los componentes afectados.
+    - Registrar alternativas descartadas y riesgos concretos.
+    - No introducir estilos fuera de los tokens sin justificarlo.
+  tasks:
+    - Tareas de 2 a 15 minutos, con ruta exacta y comando de verificación.
+    - Ninguna tarea se marca sin evidencia de ejecución.
+    - Cada slice termina con npm run verify y capturas responsive.
+
+operations:
+  apply:
+    guidance:
+      - Un cambio a la vez, en orden: site-foundation, project-catalog, lab-and-archive, studio-pages, design-finish.
+      - El contenido se edita en Markdown; no hardcodear fichas en componentes.
+      - No agregar dependencias de runtime; el sitio funciona sin JavaScript.
+      - Semina, Rizoma e Intersticio conservan su propia identidad.
+      - No inventar equipo, clientes, métricas, fechas ni hitos.
+      - La documentación y la interfaz van en español; el código va en inglés.
+      - SHALL y MUST se quedan en inglés.
+      - Antes de archivar, ejecutar npm run verify y revisar las capturas.
+  archive:
+    guidance:
+      - Resumir el resultado y las verificaciones ejecutadas.
+      - Actualizar las specs principales al archivar.

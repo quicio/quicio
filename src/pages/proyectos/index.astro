@@ -1,0 +1,355 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProjectEntry from "../../components/ProjectEntry.astro";
+import { getCollection } from "astro:content";
+
+const proyectos = (await getCollection("proyectos")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const groups = [
+  {
+    key: "editorial",
+    label: "Publicaciones y pensamiento",
+    note: "Sistemas editoriales, mapas de conocimiento y publicaciones con identidad propia.",
+  },
+  {
+    key: "instrumentos",
+    label: "Instrumentos",
+    note: "Herramientas para leer, escuchar, mirar y construir. Cada una con su propio oficio.",
+  },
+  {
+    key: "herramientas",
+    label: "Herramientas e investigación",
+    note: "Infraestructura, sistemas de diseño y plataformas para sostener el trabajo.",
+  },
+] as const;
+
+const counts = Object.fromEntries(
+  groups.map((group) => [
+    group.key,
+    proyectos.filter((project) => project.data.group === group.key).length,
+  ]),
+) as Record<(typeof groups)[number]["key"], number>;
+
+const total = proyectos.length;
+const featured = proyectos.filter((project) => project.data.featured);
+---
+
+<Base
+  title="Proyectos"
+  description="Proyectos activos de Quicio: software, publicaciones, instrumentos, investigación y experimentación. Cada proyecto conserva su propia voz y su propio despliegue."
+>
+  <header class="projects-hero">
+    <div class="container projects-hero__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">01</span>
+          <span>Proyectos</span>
+        </p>
+        <h1 class="projects-hero__title">Proyectos</h1>
+        <p class="projects-hero__lead">
+          Un ecosistema de proyectos autónomos.
+        </p>
+      </div>
+
+      <div class="projects-hero__aside">
+        <p>
+          Quicio reúne proyectos de software, publicaciones, investigación,
+          arte y música. Cada uno conserva su dominio, su interfaz y su
+          despliegue; esta página es el contexto común.
+        </p>
+        <p class="projects-hero__count mono">
+          {total} proyectos activos <span aria-hidden="true">/</span>
+          {featured.length} destacados
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <div class="container projects-layout">
+    <aside class="projects-rail">
+      <p class="projects-rail__label label">Índice</p>
+      <nav aria-label="Grupos de proyectos">
+        <ul>
+          {
+            groups.map((group) => (
+              <li>
+                <a href={`#${group.key}`}>
+                  <span>{group.label}</span>
+                  <span class="projects-rail__count">
+                    {String(counts[group.key]).padStart(2, "0")}
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+      <p class="projects-rail__note">
+        Las fichas enlazan a la página o repositorio de cada proyecto. Quicio no
+        duplica sus productos.
+      </p>
+      <a class="link-arrow" href="/experimentos/">Ver experimentos</a>
+    </aside>
+
+    <div class="projects-main">
+      {
+        groups.map((group) => (
+          <section class="project-group" id={group.key}>
+            <header class="project-group__head">
+              <div>
+                <p class="eyebrow">
+                  <span class="eyebrow__index">
+                    {String(
+                      groups.findIndex((g) => g.key === group.key) + 1,
+                    ).padStart(2, "0")}
+                  </span>
+                  <span>{group.label}</span>
+                </p>
+                <p class="project-group__note">{group.note}</p>
+              </div>
+              <p class="project-group__count mono">
+                {String(counts[group.key]).padStart(2, "0")}
+              </p>
+            </header>
+
+            <div class="project-group__entries">
+              {proyectos
+                .filter((project) => project.data.group === group.key)
+                .map((project, index) => (
+                  <ProjectEntry
+                    project={project}
+                    number={project.data.order}
+                    layout={
+                      project.data.group === "editorial"
+                        ? index < 2
+                          ? "featured"
+                          : "wide"
+                        : "compact"
+                    }
+                  />
+                ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <aside class="projects-footnote">
+        <p class="label">Nota</p>
+        <p>
+          Los prototipos que todavía no tienen una superficie pública viven en
+          <a href="/experimentos/">Experimentos</a>. El archivo conserva lo que
+          fue reemplazado o derivó en otra cosa.
+        </p>
+      </aside>
+    </div>
+  </div>
+</Base>
+
+<style>
+  .projects-hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .projects-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .projects-hero__title {
+    margin-top: var(--space-md);
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.8;
+    margin-left: -0.045em;
+  }
+
+  .projects-hero__lead {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ochre-deep);
+  }
+
+  .projects-hero__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: 0.5rem;
+  }
+
+  .projects-hero__aside p:first-child {
+    max-width: 42ch;
+    color: var(--ink-soft);
+  }
+
+  .projects-hero__count {
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .projects-layout {
+    display: grid;
+    grid-template-columns: 13.5rem minmax(0, 1fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+    padding-block: var(--space-2xl);
+  }
+
+  .projects-rail {
+    position: sticky;
+    top: calc(var(--header-h) + 2rem);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-md);
+  }
+
+  .projects-rail__label {
+    color: var(--ochre-deep);
+  }
+
+  .projects-rail nav {
+    width: 100%;
+  }
+
+  .projects-rail nav li {
+    border-top: 1px solid var(--line);
+  }
+
+  .projects-rail nav li:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .projects-rail nav a {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    padding-block: 0.7rem;
+    font-size: var(--text-sm);
+    line-height: 1.35;
+    text-decoration: none;
+    color: var(--ink-soft);
+  }
+
+  .projects-rail nav a:hover {
+    color: var(--ochre-deep);
+  }
+
+  .projects-rail__count {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ink-muted);
+  }
+
+  .projects-rail__note {
+    font-size: var(--text-xs);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .projects-main {
+    display: grid;
+    gap: var(--space-2xl);
+    min-width: 0;
+  }
+
+  .project-group__head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-bottom: var(--space-md);
+    border-bottom: 1px solid var(--line-strong);
+    margin-bottom: var(--space-lg);
+  }
+
+  .project-group__note {
+    max-width: 52ch;
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .project-group__count {
+    color: var(--ochre-deep);
+  }
+
+  .project-group__entries {
+    display: grid;
+    gap: var(--space-2xl);
+  }
+
+  .project-group__entries :global(.project--compact + .project--compact) {
+    margin-top: 0;
+  }
+
+  .projects-footnote {
+    max-width: 52ch;
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--line);
+  }
+
+  .projects-footnote .label {
+    color: var(--ochre-deep);
+  }
+
+  .projects-footnote p:last-child {
+    margin-top: var(--space-sm);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  .projects-footnote a {
+    color: var(--ochre-deep);
+  }
+
+  @media (max-width: 960px) {
+    .projects-hero__grid,
+    .projects-layout {
+      grid-template-columns: 1fr;
+    }
+
+    .projects-rail {
+      position: static;
+      padding-bottom: var(--space-md);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .projects-rail nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.25rem;
+    }
+
+    .projects-rail nav li,
+    .projects-rail nav li:last-child {
+      border: 0;
+    }
+
+    .projects-rail nav a {
+      gap: 0.45rem;
+      padding: 0;
+    }
+
+    .projects-rail__note,
+    .projects-rail :global(.link-arrow) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .project-group__entries {
+      gap: var(--space-xl);
+    }
+  }
+</style>

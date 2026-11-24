@@ -1,0 +1,331 @@
+---
+import Logo from "./Logo.astro";
+import { navegacion } from "../data/sitio";
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href);
+
+function number(index: number) {
+  return String(index + 1).padStart(2, "0");
+}
+---
+
+<header class="site-header">
+  <div class="container site-header__inner">
+    <div class="site-header__brand-wrap">
+      <a class="site-header__brand" href="/">
+        <Logo showDescriptor={false} />
+      </a>
+      <span class="site-header__rule" aria-hidden="true"></span>
+      <span class="site-header__descriptor" aria-hidden="true">
+        Estudio independiente
+      </span>
+    </div>
+
+    <nav class="site-header__nav" aria-label="Navegación principal">
+      <ul>
+        {
+          navegacion.map((item, index) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={["nav-link", { "is-active": isActive(item.href) }]}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                <span class="nav-link__index" aria-hidden="true">
+                  {number(index)}
+                </span>
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <a class="site-header__contact bracket" href="/contacto/">Contacto</a>
+
+    <details class="nav-drawer">
+      <summary class="nav-drawer__summary">
+        <span>Índice</span>
+        <span class="nav-drawer__icon" aria-hidden="true"></span>
+      </summary>
+      <div class="nav-drawer__panel">
+        <nav aria-label="Navegación móvil">
+          <ul>
+            {
+              navegacion.map((item, index) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class:list={[
+                      "nav-drawer__link",
+                      { "is-active": isActive(item.href) },
+                    ]}
+                    aria-current={isActive(item.href) ? "page" : undefined}
+                  >
+                    <span aria-hidden="true">{number(index)}</span>
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a
+                href="/contacto/"
+                class:list={[
+                  "nav-drawer__link",
+                  { "is-active": isActive("/contacto/") },
+                ]}
+              >
+                <span aria-hidden="true">05</span>
+                Contacto
+              </a>
+            </li>
+          </ul>
+        </nav>
+        <p class="nav-drawer__note">
+          Estudio independiente. Investigar, imaginar, construir.
+        </p>
+      </div>
+    </details>
+  </div>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: var(--z-header);
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .site-header__inner {
+    min-height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .site-header__brand-wrap {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    flex: none;
+  }
+
+  .site-header__brand {
+    display: inline-flex;
+    text-decoration: none;
+    color: var(--ink);
+    flex: none;
+  }
+
+  .site-header__brand:hover {
+    color: var(--ink);
+  }
+
+  .site-header__rule {
+    width: 1px;
+    height: 1.05rem;
+    background: var(--line);
+    margin-inline: 0.85rem 0.8rem;
+  }
+
+  .site-header__descriptor {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.18em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 2.2vw, 2.25rem);
+  }
+
+  .nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.42rem;
+    padding-block: 0.35rem;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-soft);
+    white-space: nowrap;
+  }
+
+  .nav-link__index {
+    font-size: 0.68rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-muted);
+    transition: color var(--dur) var(--ease);
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1rem;
+    height: 1px;
+    background: var(--ochre);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .nav-link:hover {
+    color: var(--ink);
+  }
+
+  .nav-link:hover .nav-link__index,
+  .nav-link.is-active .nav-link__index {
+    color: var(--ochre-deep);
+  }
+
+  .nav-link:hover::after,
+  .nav-link.is-active::after {
+    transform: scaleX(1);
+  }
+
+  .nav-link.is-active {
+    color: var(--ink);
+  }
+
+  .site-header__contact {
+    text-decoration: none;
+    color: var(--ink);
+    padding-block: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .site-header__contact:hover {
+    color: var(--ochre-deep);
+  }
+
+  .nav-drawer {
+    display: none;
+  }
+
+  .nav-drawer__summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.55rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+    cursor: pointer;
+    list-style: none;
+    color: var(--ink);
+  }
+
+  .nav-drawer__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .nav-drawer__icon {
+    position: relative;
+    width: 0.85rem;
+    height: 0.85rem;
+    display: inline-block;
+  }
+
+  .nav-drawer__icon::before,
+  .nav-drawer__icon::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 0.85rem;
+    height: 1px;
+    background: var(--ochre-deep);
+    transform: translate(-50%, -50%);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .nav-drawer__icon::after {
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
+
+  .nav-drawer[open] .nav-drawer__icon::after {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  .nav-drawer__panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    padding: var(--space-sm) var(--gutter) var(--space-lg);
+    box-shadow: 0 1.5rem 2.5rem rgba(36, 35, 33, 0.07);
+  }
+
+  .nav-drawer__panel ul {
+    display: grid;
+  }
+
+  .nav-drawer__link {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    padding-block: 0.9rem;
+    border-bottom: 1px solid var(--line-soft);
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 6vw, 2.25rem);
+    line-height: 1;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .nav-drawer__link span {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+  }
+
+  .nav-drawer__link.is-active {
+    color: var(--ochre-deep);
+  }
+
+  .nav-drawer__note {
+    margin-top: var(--space-md);
+    max-width: 22rem;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 1040px) {
+    .site-header__nav,
+    .site-header__contact {
+      display: none;
+    }
+
+    .nav-drawer {
+      display: block;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .site-header__rule,
+    .site-header__descriptor {
+      display: none;
+    }
+  }
+</style>

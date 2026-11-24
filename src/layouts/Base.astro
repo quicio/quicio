@@ -1,0 +1,46 @@
+---
+import "../styles/fonts.css";
+import "../styles/tokens.css";
+import "../styles/base.css";
+import Seo from "../components/Seo.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import SiteFooter from "../components/SiteFooter.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  type?: string;
+}
+
+const { title, description, image, noindex, type } = Astro.props;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="generator" content={Astro.generator} />
+    <Seo
+      title={title}
+      description={description}
+      image={image}
+      noindex={noindex}
+      type={type}
+    />
+    <slot name="head" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <SiteHeader />
+    <main id="contenido" class="page-main" tabindex="-1">
+      <slot />
+    </main>
+    <SiteFooter />
+  </body>
+</html>

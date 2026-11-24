@@ -1,0 +1,180 @@
+---
+import Base from "../../layouts/Base.astro";
+import ArchiveRow from "../../components/ArchiveRow.astro";
+import { getCollection } from "astro:content";
+
+const archivo = (await getCollection("archivo")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base
+  title="Archivo"
+  description="Archivo de Quicio: proyectos anteriores, experimentos discontinuados y artefactos que explican la evolución del estudio."
+>
+  <header class="archive-hero">
+    <div class="container archive-hero__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">03</span>
+          <span>Archivo</span>
+        </p>
+        <h1 class="archive-hero__title">Archivo</h1>
+        <p class="archive-hero__lead">
+          Lo que el estudio fue.
+        </p>
+      </div>
+      <div class="archive-hero__aside">
+        <p>
+          El archivo no es un cementerio. Es la prueba de que un estudio piensa
+          cambiando de forma: versiones reemplazadas, experimentos pausados,
+          artefactos que ya no se usan pero explican una etapa.
+        </p>
+        <p class="mono archive-hero__count">
+          {String(archivo.length).padStart(2, "0")} entradas verificables
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="container archive-list" aria-label="Entradas del archivo">
+    <div class="archive-list__head mono" aria-hidden="true">
+      <span>Año</span>
+      <span>#</span>
+      <span>Entrada</span>
+      <span>Tipo</span>
+      <span>Estado</span>
+      <span></span>
+    </div>
+    {
+      archivo.map((entry, index) => (
+        <ArchiveRow entry={entry} index={index + 1} />
+      ))
+    }
+  </section>
+
+  <section class="archive-note section">
+    <div class="container archive-note__grid">
+      <p class="eyebrow">
+        <span class="eyebrow__index">—</span>
+        <span>En preparación</span>
+      </p>
+      <div>
+        <p class="archive-note__quote">
+          El archivo se está ordenando.
+        </p>
+        <p class="archive-note__text">
+          Quicio tiene una historia que todavía se está escribiendo como relato.
+          Hasta que ese relato esté disponible y pueda verificarse, esta página
+          solo publica entradas comprobables. No se inventan fechas, proyectos
+          ni hitos para llenar el vacío.
+        </p>
+        <a class="link-arrow" href="/experimentos/">Ver procesos abiertos</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .archive-hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .archive-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .archive-hero__title {
+    margin-top: var(--space-md);
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.8;
+    margin-left: -0.045em;
+  }
+
+  .archive-hero__lead {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ochre-deep);
+  }
+
+  .archive-hero__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: 0.5rem;
+  }
+
+  .archive-hero__aside p:first-child {
+    max-width: 44ch;
+    color: var(--ink-soft);
+  }
+
+  .archive-hero__count {
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .archive-list {
+    padding-block: var(--space-2xl);
+  }
+
+  .archive-list__head {
+    display: grid;
+    grid-template-columns: 5.5rem 2rem minmax(0, 1fr) 10rem 8rem 1.2rem;
+    gap: var(--space-md);
+    padding-bottom: 0.6rem;
+    color: var(--ink-muted);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .archive-note {
+    border-top: 1px solid var(--line);
+  }
+
+  .archive-note__grid {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .archive-note__quote {
+    max-width: 18ch;
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    font-style: italic;
+    line-height: 0.98;
+  }
+
+  .archive-note__text {
+    max-width: 52ch;
+    margin-top: var(--space-md);
+    color: var(--ink-muted);
+  }
+
+  .archive-note :global(.link-arrow) {
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 900px) {
+    .archive-hero__grid,
+    .archive-note__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .archive-list__head {
+      display: none;
+    }
+  }
+</style>

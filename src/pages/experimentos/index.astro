@@ -1,0 +1,157 @@
+---
+import Base from "../../layouts/Base.astro";
+import ExperimentRow from "../../components/ExperimentRow.astro";
+import { getCollection } from "astro:content";
+
+const experimentos = (await getCollection("experimentos")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base
+  title="Experimentos"
+  description="Prototipos, investigaciones y procesos de Quicio. Un experimento no es un proyecto en pequeño: es una pregunta con forma."
+>
+  <header class="experiments-hero">
+    <div class="container experiments-hero__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">02</span>
+          <span>Experimentos</span>
+        </p>
+        <h1 class="experiments-hero__title">Experimentos</h1>
+        <p class="experiments-hero__lead">
+          Una pregunta con forma.
+        </p>
+      </div>
+      <div class="experiments-hero__aside">
+        <p>
+          Un experimento no es un proyecto en pequeño. Es un proceso que todavía
+          no necesita convertirse en producto para tener valor: un prototipo,
+          una investigación, una hipótesis que se prueba en el uso.
+        </p>
+        <p class="mono experiments-hero__count">
+          {String(experimentos.length).padStart(2, "0")} procesos abiertos
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <section class="container experiments-list" aria-label="Lista de experimentos">
+    {
+      experimentos.map((experiment, index) => (
+        <ExperimentRow experiment={experiment} index={index + 1} />
+      ))
+    }
+  </section>
+
+  <section class="experiments-note section">
+    <div class="container experiments-note__grid">
+      <p class="eyebrow">
+        <span class="eyebrow__index">—</span>
+        <span>Nota</span>
+      </p>
+      <div>
+        <p class="experiments-note__quote">
+          No todo lo que hacemos tiene que convertirse en un producto.
+        </p>
+        <p class="experiments-note__text">
+          Algunos experimentos se archivan, otros derivan en proyectos y otros
+          permanecen como preguntas abiertas. Los prototipos privados se
+          presentan sin enlace, con su estado real.
+        </p>
+        <a class="link-arrow" href="/archivo/">Ver el archivo</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .experiments-hero {
+    padding-block: var(--space-xl) var(--space-2xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .experiments-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: end;
+  }
+
+  .experiments-hero__title {
+    margin-top: var(--space-md);
+    font-size: clamp(3.4rem, 8vw, 7rem);
+    line-height: 0.8;
+    margin-left: -0.045em;
+  }
+
+  .experiments-hero__lead {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ochre-deep);
+  }
+
+  .experiments-hero__aside {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding-bottom: 0.5rem;
+  }
+
+  .experiments-hero__aside p:first-child {
+    max-width: 44ch;
+    color: var(--ink-soft);
+  }
+
+  .experiments-hero__count {
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+
+  .experiments-list {
+    padding-block: var(--space-2xl);
+  }
+
+  .experiments-note {
+    border-top: 1px solid var(--line);
+  }
+
+  .experiments-note__grid {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .experiments-note__quote {
+    max-width: 22ch;
+    font-family: var(--font-display);
+    font-size: var(--display-sm);
+    font-style: italic;
+    line-height: 0.98;
+  }
+
+  .experiments-note__text {
+    max-width: 52ch;
+    margin-top: var(--space-md);
+    color: var(--ink-muted);
+  }
+
+  .experiments-note :global(.link-arrow) {
+    margin-top: var(--space-md);
+  }
+
+  @media (max-width: 900px) {
+    .experiments-hero__grid,
+    .experiments-note__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+  }
+</style>

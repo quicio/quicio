@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      @font-face {
+        font-family: "Instrument Serif";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../public/fonts/instrument-serif-latin-400-normal.woff2")
+          format("woff2");
+      }
+      @font-face {
+        font-family: "Instrument Serif";
+        font-style: italic;
+        font-weight: 400;
+        src: url("../public/fonts/instrument-serif-latin-400-italic.woff2")
+          format("woff2");
+      }
+      @font-face {
+        font-family: "Archivo";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../public/fonts/archivo-latin-standard-normal.woff2")
+          format("woff2");
+      }
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 400;
+        src: url("../public/fonts/jetbrains-mono-latin-wght-normal.woff2")
+          format("woff2");
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+      }
+      body {
+        position: relative;
+        background: #f0ede5;
+        color: #242321;
+        font-family: "Archivo", sans-serif;
+      }
+      body::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.5;
+        mix-blend-mode: multiply;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='.15'/%3E%3C/svg%3E");
+      }
+      .frame {
+        position: absolute;
+        inset: 34px;
+        border: 1px solid rgba(36, 35, 33, 0.2);
+      }
+      .corner {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+      }
+      .corner::before,
+      .corner::after {
+        content: "";
+        position: absolute;
+        background: #242321;
+        opacity: 0.45;
+      }
+      .corner::before {
+        width: 1px;
+        height: 100%;
+        left: 50%;
+      }
+      .corner::after {
+        height: 1px;
+        width: 100%;
+        top: 50%;
+      }
+      .corner.tl {
+        left: 22px;
+        top: 22px;
+      }
+      .corner.tr {
+        right: 22px;
+        top: 22px;
+      }
+      .corner.bl {
+        left: 22px;
+        bottom: 22px;
+      }
+      .corner.br {
+        right: 22px;
+        bottom: 22px;
+      }
+      .grid {
+        position: absolute;
+        inset: 0;
+        background-image:
+          linear-gradient(rgba(36, 35, 33, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(36, 35, 33, 0.055) 1px, transparent 1px);
+        background-size: 46px 46px;
+      }
+      .mark {
+        position: absolute;
+        left: 76px;
+        top: 66px;
+        width: 54px;
+        height: 54px;
+      }
+      .meta {
+        position: absolute;
+        top: 70px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        color: #5f5b53;
+      }
+      .meta-left {
+        left: 154px;
+      }
+      .meta-right {
+        right: 76px;
+      }
+      .title {
+        position: absolute;
+        left: 70px;
+        top: 160px;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: 150px;
+        line-height: 0.85;
+        letter-spacing: -0.035em;
+      }
+      .descriptor {
+        position: absolute;
+        left: 76px;
+        top: 420px;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-style: italic;
+        font-size: 46px;
+        line-height: 1;
+        color: #84521f;
+      }
+      .rule {
+        position: absolute;
+        left: 78px;
+        bottom: 90px;
+        width: 410px;
+        height: 1px;
+        background: rgba(36, 35, 33, 0.24);
+      }
+      .domain {
+        position: absolute;
+        left: 78px;
+        bottom: 58px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 12px;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: #5f5b53;
+      }
+      .coordinates {
+        position: absolute;
+        right: 78px;
+        bottom: 58px;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        color: #77746d;
+      }
+      .sky {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 600px;
+        height: 630px;
+        overflow: hidden;
+      }
+      .orbit {
+        position: absolute;
+        right: 46px;
+        top: 82px;
+        width: 460px;
+        height: 460px;
+        border: 1px solid rgba(36, 35, 33, 0.28);
+        border-radius: 50%;
+      }
+      .orbit::after {
+        content: "";
+        position: absolute;
+        inset: 58px;
+        border: 1px dashed rgba(36, 35, 33, 0.16);
+        border-radius: 50%;
+      }
+      .sun {
+        position: absolute;
+        right: 252px;
+        top: 170px;
+        width: 196px;
+        height: 196px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 36% 32%,
+          #e8c08a 0%,
+          #c08a49 48%,
+          #8d5621 100%
+        );
+        box-shadow: 0 0 0 1px rgba(141, 86, 33, 0.18);
+      }
+      .sun::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+        mix-blend-mode: multiply;
+        opacity: 0.55;
+      }
+      .moon {
+        position: absolute;
+        right: -88px;
+        bottom: -310px;
+        width: 620px;
+        height: 620px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 34% 24%,
+          #e8e2d3 0%,
+          #b8b1a2 48%,
+          #7f7a6e 100%
+        );
+        box-shadow:
+          inset 50px 30px 120px rgba(240, 237, 229, 0.25),
+          inset -80px -60px 140px rgba(23, 24, 23, 0.55);
+        opacity: 0.92;
+      }
+      .moon::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.035' numOctaves='5'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.4'/%3E%3C/svg%3E");
+        mix-blend-mode: multiply;
+        opacity: 0.5;
+      }
+      .orbit-dot {
+        position: absolute;
+        right: 272px;
+        top: 78px;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #b77a35;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="grid"></div>
+    <div class="frame"></div>
+    <span class="corner tl"></span>
+    <span class="corner tr"></span>
+    <span class="corner bl"></span>
+    <span class="corner br"></span>
+
+    <svg class="mark" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+      <path d="M32 4.5v55" stroke="#242321" stroke-width="1.4" />
+      <path
+        d="M32 31.5C32 19.4 23.9 12.8 11.5 12.8"
+        stroke="#242321"
+        stroke-width="1.4"
+      />
+      <path
+        d="M32 31.5C32 19.4 40.1 12.8 52.5 12.8"
+        stroke="#242321"
+        stroke-width="1.4"
+      />
+      <circle cx="32" cy="31.5" r="2.4" fill="#b77a35" />
+    </svg>
+
+    <p class="meta meta-left">Estudio independiente</p>
+    <p class="meta meta-right">Quicio / 2026</p>
+
+    <h1 class="title">Quicio</h1>
+    <p class="descriptor">Estudio independiente.</p>
+    <div class="rule"></div>
+    <p class="domain">quicio.org</p>
+    <p class="coordinates">33.45° S / 70.66° O</p>
+
+    <div class="sky">
+      <div class="orbit"></div>
+      <div class="sun"></div>
+      <div class="moon"></div>
+      <div class="orbit-dot"></div>
+    </div>
+  </body>
+</html>

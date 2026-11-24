@@ -1,0 +1,123 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  entry: CollectionEntry<"archivo">;
+  index: number;
+}
+
+const { entry, index } = Astro.props;
+const data = entry.data;
+const num = String(index).padStart(2, "0");
+---
+
+<a class="archive-row" href={`/archivo/${entry.id}/`}>
+  <span class="archive-row__year">{data.year}</span>
+  <span class="archive-row__index" aria-hidden="true">{num}</span>
+  <span class="archive-row__body">
+    <span class="archive-row__title">{data.title}</span>
+    <span class="archive-row__summary">{data.summary}</span>
+  </span>
+  <span class="archive-row__kind">{data.kind}</span>
+  <span class="archive-row__state">{data.state}</span>
+  <span class="archive-row__arrow" aria-hidden="true">↗</span>
+</a>
+
+<style>
+  .archive-row {
+    display: grid;
+    grid-template-columns: 5.5rem 2rem minmax(0, 1fr) 10rem 8rem 1.2rem;
+    gap: var(--space-md);
+    align-items: baseline;
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--line);
+    text-decoration: none;
+    color: var(--ink);
+    transition: background-color var(--dur) var(--ease);
+  }
+
+  .archive-row:last-child {
+    border-bottom: 1px solid var(--line);
+  }
+
+  .archive-row:hover {
+    color: var(--ink);
+    background: rgba(183, 122, 53, 0.035);
+  }
+
+  .archive-row__year,
+  .archive-row__index,
+  .archive-row__kind,
+  .archive-row__state {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .archive-row__index {
+    color: var(--ochre-deep);
+  }
+
+  .archive-row__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .archive-row__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    line-height: 1;
+  }
+
+  .archive-row__summary {
+    max-width: 58ch;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--ink-muted);
+  }
+
+  .archive-row__state {
+    color: var(--ochre-deep);
+  }
+
+  .archive-row__arrow {
+    font-size: 1.05rem;
+    line-height: 1;
+    color: var(--ochre-deep);
+    transition: transform var(--dur) var(--ease);
+  }
+
+  .archive-row:hover .archive-row__arrow {
+    transform: translate(0.2rem, -0.2rem);
+  }
+
+  @media (max-width: 900px) {
+    .archive-row {
+      grid-template-columns: 4rem 1.5rem minmax(0, 1fr) 1.2rem;
+      gap: var(--space-sm);
+    }
+
+    .archive-row__kind,
+    .archive-row__state {
+      grid-column: 3;
+    }
+
+    .archive-row__arrow {
+      grid-column: 4;
+      grid-row: 1 / span 3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .archive-row__summary {
+      display: none;
+    }
+
+    .archive-row__kind {
+      display: none;
+    }
+  }
+</style>

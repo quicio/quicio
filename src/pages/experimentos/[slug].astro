@@ -1,0 +1,294 @@
+---
+import Base from "../../layouts/Base.astro";
+import ProjectPlate from "../../components/ProjectPlate.astro";
+import { getCollection, render, type CollectionEntry } from "astro:content";
+
+export async function getStaticPaths() {
+  const experimentos = await getCollection("experimentos");
+  return experimentos.map((experiment) => ({
+    params: { slug: experiment.id },
+    props: { experiment },
+  }));
+}
+
+interface Props {
+  experiment: CollectionEntry<"experimentos">;
+}
+
+const { experiment } = Astro.props;
+const data = experiment.data;
+const { Content } = await render(experiment);
+
+const all = (await getCollection("experimentos")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const position = all.findIndex((entry) => entry.id === experiment.id);
+const previous = position > 0 ? all[position - 1] : null;
+const next = position < all.length - 1 ? all[position + 1] : null;
+
+const num = String(data.order).padStart(2, "0");
+const external = data.link?.startsWith("http") ?? false;
+---
+
+<Base
+  title={data.title}
+  description={data.summary}
+  type="article"
+  image="/og.png"
+>
+  <article class="experiment">
+    <div class="container">
+      <a class="experiment__back" href="/experimentos/">
+        <span aria-hidden="true">←</span> Experimentos
+      </a>
+
+      <header class="experiment__header">
+        <div class="experiment__intro">
+          <p class="eyebrow">
+            <span class="eyebrow__index">{num}</span>
+            <span>Experimento</span>
+          </p>
+          <h1 class="experiment__title">{data.title}</h1>
+          <p class="experiment__lead">{data.summary}</p>
+
+          <dl class="experiment__meta">
+            <div>
+              <dt>Año</dt>
+              <dd>{data.year}</dd>
+            </div>
+            <div>
+              <dt>Tipo</dt>
+              <dd>{data.type}</dd>
+            </div>
+            <div>
+              <dt>Estado</dt>
+              <dd class="experiment__status">{data.status}</dd>
+            </div>
+          </dl>
+
+          {
+            data.relation && (
+              <p class="experiment__relation">
+                <span class="label">Relación</span>
+                {data.relation}
+              </p>
+            )
+          }
+        </div>
+
+        <div class="experiment__plate">
+          <ProjectPlate
+            variant={data.plate}
+            seed={data.seed}
+            label={`/ ${num}`}
+          />
+        </div>
+      </header>
+
+      <div class="experiment__body prose">
+        <Content />
+      </div>
+
+      {
+        data.link && (
+          <a
+            class="link-arrow experiment__external"
+            href={data.link}
+            target={external ? "_blank" : undefined}
+            rel={external ? "noreferrer" : undefined}
+          >
+            {data.linkLabel}
+          </a>
+        )
+      }
+
+      <nav class="experiment__pager" aria-label="Otros experimentos">
+        {
+          previous ? (
+            <a href={`/experimentos/${previous.id}/`}>
+              <span>← Anterior</span>
+              <strong>{previous.data.title}</strong>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+        {
+          next ? (
+            <a href={`/experimentos/${next.id}/`} class="experiment__pager-next">
+              <span>Siguiente →</span>
+              <strong>{next.data.title}</strong>
+            </a>
+          ) : (
+            <span></span>
+          )
+        }
+      </nav>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .experiment {
+    padding-block: var(--space-lg) var(--space-2xl);
+  }
+
+  .experiment__back {
+    display: inline-block;
+    margin-bottom: var(--space-lg);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--ink-muted);
+  }
+
+  .experiment__back:hover {
+    color: var(--ochre-deep);
+  }
+
+  .experiment__header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .experiment__title {
+    margin-top: var(--space-md);
+    font-size: var(--display);
+    line-height: 0.82;
+  }
+
+  .experiment__lead {
+    max-width: 44ch;
+    margin-top: var(--space-md);
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--ink-soft);
+  }
+
+  .experiment__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md) var(--space-xl);
+    margin-top: var(--space-lg);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .experiment__meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .experiment__meta dd {
+    margin-top: 0.25rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    color: var(--ink-soft);
+  }
+
+  .experiment__status {
+    color: var(--ochre-deep) !important;
+  }
+
+  .experiment__relation {
+    max-width: 48ch;
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .experiment__relation .label {
+    color: var(--ochre-deep);
+    margin-right: 0.5rem;
+  }
+
+  .experiment__plate {
+    aspect-ratio: 4 / 3.2;
+  }
+
+  .experiment__body {
+    margin-top: var(--space-xl);
+    margin-left: auto;
+    margin-right: auto;
+    padding-block: var(--space-lg);
+  }
+
+  .experiment__external {
+    margin-top: var(--space-sm);
+  }
+
+  .experiment__pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--line);
+  }
+
+  .experiment__pager a {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    text-decoration: none;
+  }
+
+  .experiment__pager span {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .experiment__pager strong {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 400;
+  }
+
+  .experiment__pager a:hover strong {
+    color: var(--ochre-deep);
+  }
+
+  .experiment__pager-next {
+    text-align: right;
+  }
+
+  @media (max-width: 900px) {
+    .experiment__header {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .experiment__title {
+      font-size: clamp(3.6rem, 18vw, 6rem);
+    }
+
+    .experiment__plate {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .experiment__pager {
+      grid-template-columns: 1fr;
+    }
+
+    .experiment__pager-next {
+      text-align: left;
+    }
+  }
+</style>

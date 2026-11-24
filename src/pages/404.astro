@@ -1,0 +1,93 @@
+---
+import Base from "../layouts/Base.astro";
+import Mark from "../components/Mark.astro";
+---
+
+<Base
+  title="Página no encontrada"
+  description="La página que buscabas no existe. Quicio es un estudio independiente; el índice sigue abierto."
+  noindex
+>
+  <section class="not-found">
+    <div class="container not-found__grid">
+      <div class="not-found__mark" aria-hidden="true">
+        <Mark size={90} />
+      </div>
+
+      <div class="not-found__body">
+        <p class="eyebrow">
+          <span class="eyebrow__index">404</span>
+          <span>Fuera de quicio</span>
+        </p>
+        <h1 class="not-found__title">
+          Esta página<br />no existe.
+        </h1>
+        <p class="not-found__text">
+          Como un quicio sin puerta: hay un eje, pero nada que gire. Prueba desde
+          el índice.
+        </p>
+
+        <div class="not-found__links">
+          <a class="link-arrow" href="/">Volver al inicio</a>
+          <a class="link-arrow" href="/proyectos/">Ver proyectos</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .not-found {
+    min-height: calc(100svh - var(--header-h) - 8rem);
+    display: flex;
+    align-items: center;
+    padding-block: var(--space-2xl);
+  }
+
+  .not-found__grid {
+    display: grid;
+    grid-template-columns: minmax(8rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(2rem, 7vw, 7rem);
+    align-items: center;
+  }
+
+  .not-found__mark {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+
+  .not-found__title {
+    margin-top: var(--space-md);
+    font-size: var(--display);
+    line-height: 0.82;
+  }
+
+  .not-found__text {
+    max-width: 40ch;
+    margin-top: var(--space-md);
+    font-size: var(--text-md);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .not-found__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  @media (max-width: 760px) {
+    .not-found__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .not-found__mark {
+      width: 7rem;
+    }
+  }
+</style>

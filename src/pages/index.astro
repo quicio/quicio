@@ -1,0 +1,713 @@
+---
+import Base from "../layouts/Base.astro";
+import CelestialPlate from "../components/CelestialPlate.astro";
+import SectionHeading from "../components/SectionHeading.astro";
+import ProjectEntry from "../components/ProjectEntry.astro";
+import ExperimentRow from "../components/ExperimentRow.astro";
+import ArchiveRow from "../components/ArchiveRow.astro";
+import { getCollection, getEntry, render } from "astro:content";
+import { disciplinas, sitio } from "../data/sitio";
+
+const inicio = await getEntry("paginas", "inicio");
+const acerca = await getEntry("paginas", "acerca");
+
+if (!inicio || !acerca) {
+  throw new Error("Falta el contenido institucional de inicio o acerca.");
+}
+
+const { Content: Intro } = await render(inicio);
+
+const proyectos = (await getCollection("proyectos")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const destacados = proyectos.filter((p) => p.data.featured);
+const experimentos = (await getCollection("experimentos"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+const archivo = (await getCollection("archivo"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 1);
+const principios = acerca.data.principles.slice(0, 4);
+
+const imagenSocial = "/og.png";
+---
+
+<Base description={inicio.data.description} image={imagenSocial}>
+  <section class="hero">
+    <div class="container hero__grid">
+      <div class="hero__copy">
+        <h1 class="hero__title rise rise--2">Quicio</h1>
+        <p class="hero__descriptor rise rise--2">
+          {inicio.data.lead}
+        </p>
+
+        <p class="hero__intro rise rise--3">
+          {inicio.data.intro}
+        </p>
+
+        <p class="hero__phrase mono rise rise--3">
+          Investigar <span aria-hidden="true">·</span> imaginar
+          <span aria-hidden="true">·</span> construir
+        </p>
+
+        <div class="hero__actions rise rise--4">
+          <a class="link-arrow link-arrow--down" href="#proyectos">
+            Entrar al archivo
+          </a>
+          <a class="hero__contact bracket" href="/contacto/">Contacto</a>
+        </div>
+      </div>
+
+      <div class="hero__plate rise rise--2">
+        <CelestialPlate />
+      </div>
+    </div>
+
+    <div class="container hero__foot">
+      <ul class="hero__disciplines" aria-label="Campos de trabajo">
+        {
+          disciplinas.map((disciplina) => (
+            <li>{disciplina}</li>
+          ))
+        }
+      </ul>
+      <p class="hero__coords mono">
+        {sitio.lugar} <span aria-hidden="true">·</span> {sitio.coordenadas}
+      </p>
+    </div>
+  </section>
+
+  <section class="home-manifesto section" aria-labelledby="manifiesto-title">
+    <div class="container home-manifesto__grid">
+      <p class="eyebrow">
+        <span class="eyebrow__index">01</span>
+        <span>Manifiesto</span>
+      </p>
+
+      <div class="home-manifesto__content">
+        <h2
+          id="manifiesto-title"
+          class="home-manifesto__quote"
+          set:html={`«${inicio.data.manifesto}»`}
+        />
+        <div class="home-manifesto__text">
+          <Intro />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="proyectos" aria-labelledby="proyectos-title">
+    <div class="container">
+      <SectionHeading
+        index="02"
+        label="Proyectos"
+        title="Un ecosistema de proyectos."
+        href="/proyectos/"
+        linkLabel="Todos los proyectos"
+      >
+        <p class="section-note">
+          Cada proyecto conserva su voz, su dominio y su despliegue. Quicio
+          ofrece el contexto y una gramática compartida.
+        </p>
+      </SectionHeading>
+
+      <div class="home-projects">
+        {
+          destacados.map((project, index) => (
+            <ProjectEntry
+              project={project}
+              layout={index < 2 ? "featured" : "wide"}
+              number={project.data.order}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="home-field surface-dark section" aria-labelledby="campo-title">
+    <div class="container home-field__grid">
+      <div class="home-field__lead">
+        <p class="eyebrow">
+          <span class="eyebrow__index">03</span>
+          <span>Campo abierto</span>
+        </p>
+        <h2 id="campo-title" class="home-field__title">
+          Quicio no es el edificio.<br />Es el quicio.
+        </h2>
+        <p class="home-field__text">
+          Un estudio independiente que reúne investigación, software,
+          publicaciones, arte y música sin subordinarlos a una sola lógica.
+          Los proyectos pueden crecer, mutar o independizarse.
+        </p>
+        <a class="link-arrow" href="/acerca/">Cómo trabaja Quicio</a>
+      </div>
+
+      <div class="home-field__principles">
+        <p class="label">Principios</p>
+        <ol>
+          {
+            principios.map((principio, index) => (
+              <li>
+                <span class="home-field__num" aria-hidden="true">
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <div>
+                  <h3>{principio.title}</h3>
+                  <p>{principio.text}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+        <p class="home-field__aside">
+          Independencia creativa, cultura abierta y pensamiento crítico. Los
+          ocho principios están en <a href="/acerca/">Acerca de Quicio</a>.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="experimentos-title">
+    <div class="container">
+      <SectionHeading
+        index="04"
+        label="Experimentos"
+        title="Lo que todavía no es proyecto."
+        href="/experimentos/"
+        linkLabel="Ver experimentos"
+      >
+        <p class="section-note">
+          Prototipos, investigaciones y procesos. No todo necesita convertirse
+          en un producto para existir.
+        </p>
+      </SectionHeading>
+
+      <div class="home-experiments">
+        {
+          experimentos.map((experiment, index) => (
+            <ExperimentRow experiment={experiment} index={index + 1} />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="home-archive section" aria-labelledby="archivo-title">
+    <div class="container">
+      <SectionHeading
+        index="05"
+        label="Archivo"
+        title="Lo que quedó atrás."
+        href="/archivo/"
+        linkLabel="Abrir el archivo"
+      >
+        <p class="section-note">
+          El historial también es parte del estudio. El archivo conserva lo
+          reemplazado, lo pausado y lo que derivó en otra cosa.
+        </p>
+      </SectionHeading>
+
+      {archivo.map((entry, index) => (
+        <ArchiveRow entry={entry} index={index + 1} />
+      ))}
+
+      <p class="home-archive__note mono">
+        El archivo se está ordenando. Por ahora solo publica entradas
+        verificables.
+      </p>
+    </div>
+  </section>
+
+  <section class="home-contact section" aria-labelledby="contacto-title">
+    <div class="container home-contact__grid">
+      <div>
+        <p class="eyebrow">
+          <span class="eyebrow__index">06</span>
+          <span>Contacto</span>
+        </p>
+        <h2 id="contacto-title" class="home-contact__title">
+          ¿Tienes una idea que necesita un quicio?
+        </h2>
+      </div>
+      <div class="home-contact__body">
+        <p>
+          Una conversación, una colaboración o un proyecto que todavía no tiene
+          forma. No hay formulario; hay un correo.
+        </p>
+        <a class="home-contact__email" href={`mailto:${sitio.email}`}>
+          {sitio.email}
+        </a>
+        <a class="link-arrow" href="/contacto/">Cómo escribir</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .hero__grid {
+    min-height: calc(100svh - var(--header-h));
+    display: grid;
+    grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+    align-items: center;
+    gap: clamp(1rem, 3vw, 3.5rem);
+    padding-block: var(--space-xl) var(--space-lg);
+  }
+
+  .hero__copy {
+    position: relative;
+    z-index: 2;
+    padding-block: var(--space-md);
+  }
+
+  .hero__copy .eyebrow {
+    align-items: center;
+    gap: 0.55rem;
+  }
+
+  .hero__title {
+    margin-top: var(--space-md);
+    margin-left: -0.055em;
+    font-size: var(--display-xl);
+    line-height: 0.76;
+    letter-spacing: -0.032em;
+  }
+
+  .hero__descriptor {
+    margin-top: 2rem;
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-style: italic;
+    line-height: 1;
+    color: var(--ochre-deep);
+  }
+
+  .hero__intro {
+    max-width: 44ch;
+    margin-top: var(--space-md);
+    font-size: var(--text-md);
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .hero__phrase {
+    margin-top: var(--space-lg);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ochre-deep);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+  }
+
+  .hero__contact {
+    text-decoration: none;
+    color: var(--ink-muted);
+  }
+
+  .hero__contact:hover {
+    color: var(--ochre-deep);
+  }
+
+  .hero__plate {
+    position: relative;
+    z-index: 1;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: calc(var(--gutter) * -1);
+    margin-block: calc(var(--space-md) * -1);
+  }
+
+  .hero__plate :global(.celestial) {
+    width: min(60vw, 790px);
+    margin-right: -3.5rem;
+  }
+
+  .hero__foot {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-md);
+    padding-block: var(--space-sm);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .hero__disciplines {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.1rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .hero__disciplines li {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.1rem;
+  }
+
+  .hero__disciplines li:not(:last-child)::after {
+    content: "/";
+    color: var(--ink-muted);
+  }
+
+  .hero__coords {
+    color: var(--ink-muted);
+    white-space: nowrap;
+    font-size: 0.75rem;
+  }
+
+  .section-note {
+    max-width: 52ch;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .home-manifesto {
+    padding-block: var(--space-2xl);
+  }
+
+  .home-manifesto__grid {
+    display: grid;
+    grid-template-columns: minmax(10rem, 0.3fr) minmax(0, 1fr);
+    gap: clamp(1.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .home-manifesto__content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .home-manifesto__quote {
+    max-width: 12ch;
+    font-size: var(--display-sm);
+    line-height: 0.98;
+    color: var(--ink);
+  }
+
+  .home-manifesto__quote :global(.accent) {
+    color: var(--ochre-deep);
+  }
+
+  .home-manifesto__text {
+    max-width: 52ch;
+    display: grid;
+    gap: 1em;
+    padding-top: 0.4rem;
+    font-size: var(--text-base);
+    color: var(--ink-soft);
+  }
+
+  .home-projects {
+    display: grid;
+    min-width: 0;
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+    gap: clamp(2rem, 4vw, 4rem) var(--grid-gap);
+  }
+
+  .home-projects > :global(*) {
+    min-width: 0;
+  }
+
+  .home-projects > :global(:nth-child(1)) {
+    grid-column: span 7;
+  }
+
+  .home-projects > :global(:nth-child(2)) {
+    grid-column: span 5;
+    margin-top: 7rem;
+  }
+
+  .home-projects > :global(:nth-child(3)) {
+    grid-column: 1 / -1;
+    margin-top: var(--space-md);
+    padding-top: var(--space-lg);
+    border-top: 1px solid var(--line);
+  }
+
+  .home-field {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-field::before {
+    content: "";
+    position: absolute;
+    right: -12vw;
+    top: -18vw;
+    width: 42vw;
+    height: 42vw;
+    border: 1px solid var(--line-dark);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  .home-field__grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+
+  .home-field__title {
+    max-width: 11ch;
+    margin-top: var(--space-md);
+    font-size: var(--display-sm);
+    line-height: 0.98;
+  }
+
+  .home-field__text {
+    max-width: 42ch;
+    margin-top: var(--space-md);
+    font-size: var(--text-base);
+    line-height: 1.6;
+    color: var(--dark-muted);
+  }
+
+  .home-field__lead :global(.link-arrow) {
+    margin-top: var(--space-lg);
+  }
+
+  .home-field__principles {
+    padding-top: 0.3rem;
+  }
+
+  .home-field__principles .label {
+    color: var(--ochre-soft);
+    display: block;
+    margin-bottom: var(--space-md);
+  }
+
+  .home-field__principles ol {
+    display: grid;
+  }
+
+  .home-field__principles li {
+    display: grid;
+    grid-template-columns: 2rem minmax(0, 1fr);
+    gap: var(--space-sm);
+    padding-block: var(--space-sm);
+    border-top: 1px solid var(--line-dark);
+  }
+
+  .home-field__principles li:last-child {
+    border-bottom: 1px solid var(--line-dark);
+  }
+
+  .home-field__num {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: var(--ochre-soft);
+    padding-top: 0.2rem;
+  }
+
+  .home-field__principles h3 {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    letter-spacing: 0;
+    color: var(--dark-ink);
+  }
+
+  .home-field__principles p {
+    margin-top: 0.25rem;
+    font-size: var(--text-sm);
+    line-height: 1.5;
+    color: var(--dark-muted);
+  }
+
+  .home-field__aside {
+    margin-top: var(--space-md);
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--dark-muted);
+  }
+
+  .home-field__aside a {
+    color: var(--ochre-soft);
+  }
+
+  .home-experiments {
+    display: grid;
+  }
+
+  .home-archive__note {
+    margin-top: var(--space-md);
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+  }
+
+  .home-contact {
+    border-top: 1px solid var(--line);
+    padding-top: var(--space-2xl);
+  }
+
+  .home-contact__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: end;
+  }
+
+  .home-contact__title {
+    max-width: 13ch;
+    margin-top: var(--space-md);
+    font-size: var(--display-sm);
+    line-height: 0.98;
+  }
+
+  .home-contact__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    padding-bottom: 0.45rem;
+  }
+
+  .home-contact__body p {
+    max-width: 38ch;
+    color: var(--ink-muted);
+  }
+
+  .home-contact__email {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    line-height: 1;
+    text-decoration: none;
+    color: var(--ochre-deep);
+    border-bottom: 1px solid var(--ochre);
+  }
+
+  .home-contact__email:hover {
+    color: var(--ink);
+    border-color: var(--ink);
+  }
+
+  @media (max-width: 1100px) {
+    .hero__grid {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    }
+
+    .home-manifesto__content {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .home-manifesto__quote {
+      max-width: 16ch;
+    }
+
+    .home-projects > :global(:nth-child(2)) {
+      margin-top: 4rem;
+    }
+  }
+
+  @media (max-width: 1120px) {
+    .home-projects {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+
+    .home-projects > :global(:nth-child(1)),
+    .home-projects > :global(:nth-child(2)),
+    .home-projects > :global(:nth-child(3)) {
+      grid-column: 1;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .home-projects > :global(:nth-child(2)),
+    .home-projects > :global(:nth-child(3)) {
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 900px) {
+    .hero__grid {
+      grid-template-columns: 1fr;
+      min-height: auto;
+      padding-top: var(--space-lg);
+    }
+
+    .hero__plate {
+      order: 2;
+      margin-inline: calc(var(--gutter) * -1);
+      margin-block: var(--space-sm) 0;
+      justify-content: center;
+    }
+
+    .hero__plate :global(.celestial) {
+      width: 112%;
+      margin-right: 0;
+    }
+
+    .hero__copy {
+      order: 1;
+      padding-block: var(--space-sm);
+    }
+
+    .hero__title {
+      font-size: clamp(4.5rem, 22vw, 9rem);
+    }
+
+    .hero__foot {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .home-manifesto__grid,
+    .home-field__grid,
+    .home-contact__grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-lg);
+    }
+
+    .home-projects {
+      grid-template-columns: 1fr;
+    }
+
+    .home-projects > :global(:nth-child(1)),
+    .home-projects > :global(:nth-child(2)),
+    .home-projects > :global(:nth-child(3)) {
+      grid-column: 1;
+      margin-top: 0;
+      padding-top: 0;
+      border-top: 0;
+    }
+
+    .home-projects > :global(:nth-child(2)) {
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--line);
+    }
+
+    .home-projects > :global(:nth-child(3)) {
+      padding-top: var(--space-xl);
+      border-top: 1px solid var(--line);
+    }
+  }
+</style>

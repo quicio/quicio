@@ -1,0 +1,67 @@
+---
+interface Props {
+  index: string;
+  label: string;
+  title?: string;
+  href?: string;
+  linkLabel?: string;
+  class?: string;
+}
+
+const {
+  index,
+  label,
+  title,
+  href,
+  linkLabel = "Ver todo",
+  class: className = "",
+} = Astro.props;
+---
+
+<header class:list={["section-head", className]}>
+  <p class="eyebrow">
+    <span class="eyebrow__index">{index}</span>
+    <span>{label}</span>
+  </p>
+  {
+    title && (
+      <div class="section-head__title">
+        <h2>{title}</h2>
+        {href && (
+          <a class="link-arrow" href={href}>
+            {linkLabel}
+          </a>
+        )}
+      </div>
+    )
+  }
+  <slot />
+</header>
+
+<style>
+  .section-head {
+    display: grid;
+    gap: var(--space-sm);
+    padding-bottom: var(--space-lg);
+    border-bottom: 1px solid var(--line);
+    margin-bottom: var(--space-lg);
+  }
+
+  .section-head__title {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-md);
+  }
+
+  .section-head__title h2 {
+    font-size: var(--display-sm);
+  }
+
+  @media (max-width: 640px) {
+    .section-head__title {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>

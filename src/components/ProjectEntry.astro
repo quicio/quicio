@@ -1,0 +1,336 @@
+---
+import { render, type CollectionEntry } from "astro:content";
+import ProjectPlate from "./ProjectPlate.astro";
+
+interface Props {
+  project: CollectionEntry<"proyectos">;
+  layout?: "featured" | "wide" | "compact";
+  number?: number;
+}
+
+const { project, layout = "compact", number } = Astro.props;
+const data = project.data;
+const { Content } = await render(project);
+const num = String(number ?? data.order).padStart(2, "0");
+const hasBody = Boolean(project.body?.trim());
+const primary = data.link ?? data.repo;
+const externalPrimary = primary?.startsWith("http") ?? false;
+const isFeatured = layout === "featured" || layout === "wide";
+---
+
+<article class:list={["project", `project--${layout}`]} id={project.id}>
+  <div class="project__plate">
+    <ProjectPlate
+      variant={data.plate}
+      seed={data.seed}
+      label={`/ ${num}`}
+    />
+  </div>
+
+  <div class="project__content">
+    <div class="project__top">
+      <span class="project__index" aria-hidden="true">{num}</span>
+      <span class="project__status">{data.status}</span>
+    </div>
+
+    <h3 class="project__title">{data.title}</h3>
+    <p class="project__descriptor">{data.descriptor}</p>
+    <p class="project__summary">{data.summary}</p>
+
+    {
+      isFeatured && hasBody && (
+        <div class="project__note prose">
+          <Content />
+        </div>
+      )
+    }
+
+    <p class="project__relation">
+      <span class="label">Relación</span>
+      {data.relation}
+    </p>
+
+    <div class="project__footer">
+      <div class="project__meta">
+        <span class="project__disciplines">
+          {data.disciplines.map((d, i) => (
+            <>
+              {i > 0 && <span class="project__sep" aria-hidden="true">/</span>}
+              {d}
+            </>
+          ))}
+        </span>
+        {data.year && <span class="project__year">{data.year}</span>}
+      </div>
+
+      <div class="project__links">
+        {
+          primary ? (
+            <a
+              class="link-arrow"
+              href={primary}
+              target={externalPrimary ? "_blank" : undefined}
+              rel={externalPrimary ? "noreferrer" : undefined}
+            >
+              {data.linkLabel}
+            </a>
+          ) : (
+            <span class="project__no-link">Sin superficie pública</span>
+          )
+        }
+        {
+          data.repo && data.repo !== primary && (
+            <a
+              class="link-arrow project__repo"
+              href={data.repo}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Repositorio
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</article>
+
+<style>
+  .project {
+    display: grid;
+    gap: var(--space-md);
+    min-width: 0;
+  }
+
+  .project--featured {
+    grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .project--wide {
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+    gap: clamp(1.5rem, 4vw, 4rem);
+    align-items: center;
+  }
+
+  .project--compact {
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: var(--space-md);
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--line);
+  }
+
+  .project__plate {
+    aspect-ratio: 4 / 3;
+    min-height: 0;
+  }
+
+  .project--featured .project__plate {
+    aspect-ratio: 4 / 3.35;
+  }
+
+  .project--wide .project__plate {
+    aspect-ratio: 3 / 2;
+  }
+
+  .project--compact .project__plate {
+    aspect-ratio: 4 / 3;
+  }
+
+  .project__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    min-width: 0;
+  }
+
+  .project__top {
+    width: 100%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+  }
+
+  .project__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.08em;
+    color: var(--ochre-deep);
+  }
+
+  .project__status {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    text-align: right;
+  }
+
+  .project__title {
+    font-size: var(--text-xl);
+    line-height: 0.95;
+  }
+
+  .project--compact .project__title {
+    font-size: var(--text-lg);
+  }
+
+  .project__descriptor {
+    margin-top: 0.35rem;
+    font-family: var(--font-display);
+    font-size: var(--text-md);
+    font-style: italic;
+    line-height: 1.12;
+    color: var(--ink-soft);
+  }
+
+  .project--compact .project__descriptor {
+    font-size: var(--text-base);
+  }
+
+  .project__summary {
+    max-width: 48ch;
+    margin-top: var(--space-sm);
+    font-size: var(--text-base);
+    line-height: 1.6;
+  }
+
+  .project--compact .project__summary {
+    margin-top: 0.5rem;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+
+  .project__note {
+    margin-top: var(--space-sm);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--line-soft);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    color: var(--ink-soft);
+  }
+
+  .project__note :global(p) {
+    max-width: 52ch;
+  }
+
+  .project__note :global(p + p) {
+    margin-top: 0.8em;
+  }
+
+  .project__relation {
+    margin-top: var(--space-sm);
+    max-width: 52ch;
+    font-size: var(--text-sm);
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .project__relation .label {
+    color: var(--ochre-deep);
+    margin-right: 0.5rem;
+  }
+
+  .project--compact .project__relation {
+    display: none;
+  }
+
+  .project__footer {
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-sm);
+    margin-top: var(--space-md);
+    padding-top: var(--space-sm);
+    border-top: 1px solid var(--line-soft);
+  }
+
+  .project__meta {
+    display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    gap: 0.4rem 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  .project__sep {
+    margin-inline: 0.35rem;
+    color: var(--ink-muted);
+  }
+
+  .project__year {
+    color: var(--ink-muted);
+  }
+
+  .project__links {
+    display: flex;
+    min-width: 0;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.75rem 1.25rem;
+  }
+
+  .project__repo {
+    color: var(--ink-muted);
+  }
+
+  .project__no-link {
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+  }
+
+  @media (max-width: 1180px) {
+    .project--featured,
+    .project--wide {
+      grid-template-columns: 1fr;
+      gap: var(--space-md);
+    }
+
+    .project--featured .project__plate,
+    .project--wide .project__plate {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .project--compact {
+      grid-template-columns: 6.5rem minmax(0, 1fr);
+      gap: var(--space-sm);
+    }
+
+    .project--compact .project__summary {
+      display: none;
+    }
+
+    .project__title {
+      font-size: var(--text-lg);
+    }
+
+    .project__footer {
+      margin-top: var(--space-sm);
+    }
+
+    .project--compact .project__footer {
+      margin-top: 0.55rem;
+    }
+
+    .project--compact .project__meta {
+      display: none;
+    }
+  }
+</style>

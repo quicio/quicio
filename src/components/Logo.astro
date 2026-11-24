@@ -1,0 +1,149 @@
+---
+import Mark from "./Mark.astro";
+
+interface Props {
+  variant?: "lockup" | "stacked" | "mark";
+  tone?: "ink" | "paper";
+  showDescriptor?: boolean;
+  class?: string;
+}
+
+const {
+  variant = "lockup",
+  tone = "ink",
+  showDescriptor = true,
+  class: className = "",
+} = Astro.props;
+---
+
+<div
+  class:list={["logo", `logo--${variant}`, `logo--${tone}`, className]}
+  role="img"
+  aria-label="Quicio, estudio independiente"
+>
+  {
+    (variant === "lockup" || variant === "stacked") && (
+      <Mark size={variant === "stacked" ? 42 : 30} class="logo__mark" />
+    )
+  }
+  {
+    variant !== "mark" && (
+      <span class="logo__word" aria-hidden="true">
+        Quicio
+      </span>
+    )
+  }
+  {
+    variant === "lockup" && showDescriptor && (
+      <>
+        <span class="logo__rule" aria-hidden="true"></span>
+        <span class="logo__descriptor" aria-hidden="true">
+          Estudio independiente
+        </span>
+      </>
+    )
+  }
+  {
+    variant === "stacked" && (
+      <span class="logo__descriptor" aria-hidden="true">
+        Estudio independiente
+      </span>
+    )
+  }
+  {
+    variant === "mark" && <Mark size={34} class="logo__mark" />
+  }
+</div>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    color: var(--ink);
+    line-height: 1;
+  }
+
+  .logo--paper {
+    color: var(--dark-ink);
+  }
+
+  .logo__word {
+    font-family: var(--font-display);
+    font-size: 1.72rem;
+    font-weight: 400;
+    line-height: 0.8;
+    letter-spacing: -0.018em;
+    padding-bottom: 0.12em;
+  }
+
+  .logo__mark {
+    margin-right: 0.7rem;
+    margin-top: -0.1rem;
+  }
+
+  .logo__rule {
+    width: 1px;
+    height: 1.05rem;
+    background: var(--line);
+    margin-inline: 0.85rem 0.8rem;
+  }
+
+  .logo__descriptor {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    white-space: nowrap;
+  }
+
+  .logo--paper .logo__descriptor {
+    color: var(--dark-muted);
+  }
+
+  .logo--paper .logo__rule {
+    background: var(--line-dark);
+  }
+
+  .logo--stacked {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+  }
+
+  .logo--stacked .logo__mark {
+    margin-right: 0;
+    margin-top: 0;
+  }
+
+  .logo--stacked .logo__word {
+    font-size: clamp(3rem, 7vw, 5.5rem);
+  }
+
+  .logo--stacked .logo__descriptor {
+    letter-spacing: 0.22em;
+    font-size: 0.68rem;
+  }
+
+  .logo--mark {
+    display: inline-flex;
+  }
+
+  @media (max-width: 720px) {
+    .logo__descriptor,
+    .logo__rule {
+      display: none;
+    }
+
+    .logo__word {
+      font-size: 1.5rem;
+    }
+
+    .logo__mark {
+      margin-right: 0.55rem;
+    }
+  }
+</style>

@@ -1,0 +1,31 @@
+{
+  "name": "quicio",
+  "version": "0.1.0",
+  "description": "Quicio — Estudio independiente. Investigar, imaginar, construir.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "links": "node scripts/check-links.mjs",
+    "verify": "npm run check && npm run build && npm run links",
+    "og": "bash scripts/build-og.sh"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.6",
+    "astro": "^7.4.13"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "prettier": "^3.10.1",
+    "prettier-plugin-astro": "^1.1.2",
+    "typescript": "^5.9.3"
+  }
+}

@@ -1,0 +1,54 @@
+---
+interface Props {
+  size?: number | string;
+  title?: string;
+  class?: string;
+}
+
+const { size = 28, title, class: className = "" } = Astro.props;
+---
+
+<svg
+  class:list={["mark", className]}
+  width={size}
+  height={size}
+  viewBox="0 0 64 64"
+  fill="none"
+  role={title ? "img" : undefined}
+  aria-hidden={title ? undefined : "true"}
+  focusable="false"
+>
+  {title && <title>{title}</title>}
+  <path
+    d="M32 4.5v55"
+    stroke="currentColor"
+    stroke-width="1.35"
+    stroke-linecap="square"></path>
+  <path
+    d="M32 31.5C32 19.4 23.9 12.8 11.5 12.8"
+    stroke="currentColor"
+    stroke-width="1.35"
+    stroke-linecap="square"></path>
+  <path
+    d="M32 31.5C32 19.4 40.1 12.8 52.5 12.8"
+    stroke="currentColor"
+    stroke-width="1.35"
+    stroke-linecap="square"></path>
+  <circle class="mark__pivot" cx="32" cy="31.5" r="2.2"></circle>
+</svg>
+
+<style>
+  .mark {
+    overflow: visible;
+    flex: none;
+  }
+
+  .mark__pivot {
+    fill: var(--ochre);
+  }
+
+  :global(.surface-dark) .mark__pivot,
+  :global(.footer) .mark__pivot {
+    fill: var(--ochre-soft);
+  }
+</style>
