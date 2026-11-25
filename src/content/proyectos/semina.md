@@ -10,7 +10,7 @@ disciplines:
 status: En desarrollo
 year: "2026"
 relation: Proyecto fundacional del ecosistema. Semina es la infraestructura editorial desde la que se articulan Commentarii, Miscellanea y las revistas independientes.
-link: https://semina.quicio.qzz.io/
+link: https://semina.quicio.org/
 linkLabel: Abrir Semina
 plate: semina
 seed: 31
