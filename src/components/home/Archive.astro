@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "../SectionHeading.astro";
+import ArchiveRow from "../ArchiveRow.astro";
+import type { HomeSection } from "../../lib/home";
+
+interface Props {
+  seccion: HomeSection;
+  numero: string;
+}
+
+const { seccion, numero } = Astro.props;
+
+const archivo = (await getCollection("archivo"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 1);
+---
+
+<section
+  id={seccion.id}
+  class="home-archive section"
+  aria-labelledby={`${seccion.id}-title`}
+>
+  <div class="container">
+    <SectionHeading
+      index={numero}
+      label={seccion.label}
+      title={seccion.title}
+      titleId={`${seccion.id}-title`}
+      href={seccion.linkHref}
+      linkLabel={seccion.linkLabel}
+    >
+      {seccion.note && <p class="section-note">{seccion.note}</p>}
+    </SectionHeading>
+
+    {archivo.map((entry, index) => <ArchiveRow entry={entry} index={index + 1} />)}
+
+    {
+      seccion.footnote && (
+        <p class="home-archive__note mono">{seccion.footnote}</p>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .home-archive__note {
+    margin-top: var(--space-md);
+    color: var(--ink-muted);
+    font-size: var(--text-sm);
+  }
+</style>

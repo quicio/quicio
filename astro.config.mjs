@@ -30,6 +30,7 @@ function rehypeBaseLinks() {
 export default defineConfig({
   site,
   base,
+  server: { host: "127.0.0.1" },
   trailingSlash: "always",
   build: { format: "directory" },
   integrations: [

@@ -79,6 +79,29 @@ const archivo = defineCollection({
   }),
 });
 
+const homeSection = z.object({
+  id: z.enum([
+    "manifiesto",
+    "proyectos",
+    "campo",
+    "experimentos",
+    "archivo",
+    "contacto",
+  ]),
+  active: z.boolean().default(true),
+  label: z.string(),
+  title: z.string().optional(),
+  note: z.string().optional(),
+  text: z.string().optional(),
+  footnote: z.string().optional(),
+  linkLabel: z.string().optional(),
+  linkHref: z.string().optional(),
+  principlesLabel: z.string().optional(),
+  aside: z.string().optional(),
+  asideLinkLabel: z.string().optional(),
+  asideLinkHref: z.string().optional(),
+});
+
 const paginas = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/paginas" }),
   schema: z.object({
@@ -91,9 +114,7 @@ const paginas = defineCollection({
     principles: z
       .array(z.object({ title: z.string(), text: z.string() }))
       .default([]),
-    sections: z
-      .array(z.object({ title: z.string(), body: z.string() }))
-      .default([]),
+    homeSections: z.array(homeSection).default([]),
     email: z.string().email().optional(),
   }),
 });

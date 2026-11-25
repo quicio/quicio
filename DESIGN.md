@@ -206,6 +206,10 @@ Barra sticky de papel sólido, línea inferior capilar. Isotipo + wordmark + des
 
 En la portada la cabecera usa una **variante superpuesta**: `position: absolute`, sin fondo ni línea inferior, apoyada sobre la lámina. Se desplaza con la portada y deja de ser sticky; el resto de páginas conserva la barra sólida. El bloque central de la lámina reserva la altura de la cabecera para que la nav no tape el glyph.
 
+### Secciones de portada
+
+La portada se compone desde `homeSections` en `inicio.md`: una lista ordenada de seis bloques —manifiesto, proyectos, campo abierto, experimentos, archivo y contacto—. La numeración es posicional; `active: false` oculta una sección y cierra la numeración. El registro que mapea cada `id` a su componente vive en `index.astro`; añadir un tipo nuevo exige un componente, no solo una entrada de contenido.
+
 ### Footer
 
 Superficie oscura. Wordmark apilado, frase, nota del estudio, columnas de secciones/ecosistema/contacto/sistema, y una línea final con copyright, coordenadas, colofón y «Volver arriba».

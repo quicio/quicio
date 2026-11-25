@@ -2,6 +2,46 @@
 
 Todo el contenido editorial vive en Markdown dentro de `src/content/`. No hace falta tocar componentes para agregar un proyecto, un experimento o una entrada de archivo.
 
+## Portada
+
+Archivo: `src/content/paginas/inicio.md`.
+
+La portada se compone desde `homeSections`. El orden de la lista es el orden en la página y la numeración (`01`, `02`…) se genera sola.
+
+```yaml
+homeSections:
+  - id: manifiesto
+    label: Manifiesto
+  - id: proyectos
+    label: Proyectos
+    title: Un ecosistema de proyectos.
+    note: Cada proyecto conserva su voz, su dominio y su despliegue.
+    linkLabel: Todos los proyectos
+    linkHref: /proyectos/
+  - id: campo
+    label: Campo abierto
+    title: "Quicio no es el edificio.<br />Es el quicio."
+    text: Un estudio independiente que reúne investigación, software…
+    linkLabel: Cómo trabaja Quicio
+    linkHref: /acerca/
+    principlesLabel: Principios
+    aside: Independencia creativa, cultura abierta y pensamiento crítico.
+    asideLinkLabel: Acerca de Quicio
+    asideLinkHref: /acerca/
+  # experimentos, archivo y contacto siguen el mismo patrón
+```
+
+Campos:
+
+- `id`: `manifiesto`, `proyectos`, `campo`, `experimentos`, `archivo` o `contacto`. Define el componente y el ancla de la sección.
+- `active`: `false` oculta la sección y renumera el resto. Por defecto es `true`.
+- `label`: etiqueta del índice.
+- `title`, `note`, `text`, `footnote`: copia de la sección. `title` admite `<br />`; el resto es texto plano.
+- `linkLabel` y `linkHref`: llamada a la acción.
+- `principlesLabel`, `aside`, `asideLinkLabel`, `asideLinkHref`: solo para `campo`.
+
+La cita del manifiesto vive en `manifesto` y su cuerpo en el Markdown. El hero no forma parte de la lista. Para un tipo de sección nuevo hace falta un componente y registrarlo; no es un CMS.
+
 ## Proyectos
 
 Archivo: `src/content/proyectos/<slug>.md`.

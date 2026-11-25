@@ -5,6 +5,7 @@ interface Props {
   index: string;
   label: string;
   title?: string;
+  titleId?: string;
   href?: string;
   linkLabel?: string;
   class?: string;
@@ -14,6 +15,7 @@ const {
   index,
   label,
   title,
+  titleId,
   href,
   linkLabel = "Ver todo",
   class: className = "",
@@ -30,7 +32,7 @@ const target = href ? url(href) : undefined;
   {
     title && (
       <div class="section-head__title">
-        <h2>{title}</h2>
+        <h2 id={titleId}>{title}</h2>
         {target && (
           <a class="link-arrow" href={target}>
             {linkLabel}

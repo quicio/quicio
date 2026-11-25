@@ -1,0 +1,50 @@
+---
+import { getCollection } from "astro:content";
+import SectionHeading from "../SectionHeading.astro";
+import ExperimentRow from "../ExperimentRow.astro";
+import type { HomeSection } from "../../lib/home";
+
+interface Props {
+  seccion: HomeSection;
+  numero: string;
+}
+
+const { seccion, numero } = Astro.props;
+
+const experimentos = (await getCollection("experimentos"))
+  .sort((a, b) => a.data.order - b.data.order)
+  .slice(0, 3);
+---
+
+<section
+  id={seccion.id}
+  class="section"
+  aria-labelledby={`${seccion.id}-title`}
+>
+  <div class="container">
+    <SectionHeading
+      index={numero}
+      label={seccion.label}
+      title={seccion.title}
+      titleId={`${seccion.id}-title`}
+      href={seccion.linkHref}
+      linkLabel={seccion.linkLabel}
+    >
+      {seccion.note && <p class="section-note">{seccion.note}</p>}
+    </SectionHeading>
+
+    <div class="home-experiments">
+      {
+        experimentos.map((experiment, index) => (
+          <ExperimentRow experiment={experiment} index={index + 1} />
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .home-experiments {
+    display: grid;
+  }
+</style>
