@@ -78,7 +78,14 @@ const imageWidths = layout === "compact" ? [240, 480] : [480, 720, 1000];
         <span class="project__disciplines">
           {data.disciplines.map((d, i) => (
             <>
-              {i > 0 && <span class="project__sep" aria-hidden="true">/</span>}
+              {i > 0 && (
+                <>
+                  {" "}
+                  <span class="project__sep" aria-hidden="true">
+                    /
+                  </span>{" "}
+                </>
+              )}
               {d}
             </>
           ))}
@@ -307,8 +314,12 @@ const imageWidths = layout === "compact" ? [240, 480] : [480, 720, 1000];
     color: var(--ink-muted);
   }
 
+  .project__disciplines {
+    min-width: 0;
+  }
+
   .project__sep {
-    margin-inline: 0.35rem;
+    margin-inline: 0.15rem;
     color: var(--ink-muted);
   }
 

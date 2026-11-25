@@ -15,9 +15,7 @@ Registro vivo de hallazgos visuales, de accesibilidad y de sistema. No es una li
 
 | ID | Prioridad | Área | Hallazgo | Evidencia | Propuesta | Estado |
 |---|---|---|---|---|---|---|
-| D-001 | Alta | Fichas de proyecto | A 1280 y 1366 px la portada desborda en horizontal 9–26 px por `.project__disciplines` | `scrollWidth` 1306 a 1280 y 1375 a 1366; el span mide 1023→1306 a 1280 | Permitir que la fila de disciplinas encoja o rompa (`min-width: 0`, `flex-wrap`) y comprobar también `/proyectos/` | abierto |
 | D-002 | Alta | Tipografía / legal | La licencia de Roman Serif no incluye texto de uso web; falta confirmar derechos de distribución | `public/fonts/LICENSE-romanserif.txt`; nota en `DESIGN.md` | Confirmar con el proveedor; si no hay permiso, planificar sustituta y actualizar tokens | necesita decisión |
-| D-003 | Media | Imagen social | `public/og.png` se generó con el hero anterior (`hero-espacio.png`) y no con la lámina actual | `scripts/og.html` línea 204; `og.png` 1200×630 del 24/11 16:47 | Regenerar con la composición actual o con un encuadre social propio | abierto |
 | D-004 | Media | Rendimiento | Roman Serif se sirve en TTF (81 kB + 74 kB) sin subset; Archivo y JetBrains ya van en woff2 | `src/assets/fonts/RomanSerif.ttf`, `RomanSerif-Oblique.ttf`; `docs/...` no aplica | Convertir a woff2 y subconjuntar el latino; medir el ahorro antes de publicar | abierto |
 | D-005 | Baja | Textura | El grano del hero (`.hero::after`, opacidad 0.46) es más fuerte que el grano global; puede notarse el salto en el pliegue | Comparar `hero-final3-1536.png` con `home-scrolled.png` | Revisar el pliegue a 1024 y 1440; si se nota, igualar o prolongar el grano | abierto |
 | D-006 | Baja | Cabecera | En la portada la cabecera es absoluta y se va con la lámina; no hay navegación persistente al hacer scroll | `home-scrolled.png`; `SiteHeader` variante `--overlay` | Evaluar un revelado al subir con mejora progresiva; si se hace, abrir cambio de OpenSpec | necesita decisión |
@@ -26,23 +24,11 @@ Registro vivo de hallazgos visuales, de accesibilidad y de sistema. No es una li
 
 ## Detalle
 
-### D-001 · Desbordamiento a 1280 y 1366
-
-Reproducción: abrir `/` a 1280×720 y comprobar `document.documentElement.scrollWidth` (1306). El elemento que sobresale es `span.project__disciplines` dentro de una ficha destacada; a 1440 y 1024 no ocurre. Afecta al requisito de responsive del `site-shell` y a la sensación de página recortada.
-
 ### D-002 · Licencia de Roman Serif
 
 El archivo de licencia declara el titular y advierte que no incluye un texto de uso web. Se puede publicar el sitio, pero redistribuir la fuente sin permiso es un riesgo. No es un arreglo de diseño: es una decisión de negocio con consecuencia tipográfica.
 
-### D-003 · Imagen social
-
-La imagen de Open Graph y Twitter sigue usando el hero anterior. Es lo primero que se ve al compartir el enlace, así que conviene regenerarla cuando la lámina esté cerrada.
-
-### D-009 · Sol de origen
-
-El borde oscuro del PNG se resolvió en el hero con una máscara elíptica. Si el sol se usa en otro sitio sin esa máscara, el borde vuelve. La solución de fondo es un asset limpio; la de corto plazo, replicar la máscara.
-
-## Resueltos en la revisión del hero
+## Resueltos
 
 | ID | Hallazgo | Resolución |
 |---|---|---|
@@ -55,6 +41,8 @@ El borde oscuro del PNG se resolvió en el hero con una máscara elíptica. Si e
 | R-007 | Disciplinas a 9,28 px en 1280×720 | Mínimo de 11 px |
 | R-008 | Borde difuminado del sol | Se comprobó que el PNG no trae ese borde: el fundido era la máscara CSS. Retirada; el sol conserva el borde nítido del asset |
 | R-009 | El isotipo de cabecera, footer y favicon no coincidía con el glyph definitivo | `Mark`, `Logo`, `favicon.svg` y los PNG de icono usan el símbolo 100×150 sin pivote |
+| R-010 | Desbordamiento horizontal a 1280/1366 por `.project__disciplines` | Separadores con espacios y `min-width: 0`; sin scroll horizontal a 1280 y 1366 |
+| R-011 | `og.png` generado con el hero anterior | Regenerado con el sol, la luna y el wordmark actuales; 1200×630 |
 
 ## Descartados
 

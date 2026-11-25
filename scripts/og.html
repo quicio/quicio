@@ -19,7 +19,7 @@
       @font-face {
         font-family: "JetBrains Mono";
         font-style: normal;
-        font-weight: 400;
+        font-weight: 100 800;
         src: url("../src/assets/fonts/jetbrains-mono-latin-wght-normal.woff2")
           format("woff2");
       }
@@ -116,12 +116,35 @@
         z-index: 1;
         overflow: hidden;
       }
-      .sky img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: 18% center;
+      .sky::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to bottom,
+          transparent 68%,
+          #f0ede5 94%
+        );
+        pointer-events: none;
+      }
+      .moon {
+        position: absolute;
+        right: -40px;
+        bottom: -40px;
+        width: 720px;
+        height: auto;
         display: block;
+        filter: grayscale(1) contrast(1.24) brightness(0.82) sepia(0.12);
+      }
+      .sun {
+        position: absolute;
+        left: 22px;
+        top: 24px;
+        width: 250px;
+        height: auto;
+        z-index: 0;
+        mix-blend-mode: multiply;
+        filter: saturate(0.8) brightness(1.02);
       }
       .content {
         position: absolute;
@@ -141,7 +164,8 @@
       .descriptor {
         margin: 22px 0 0;
         font-size: 12px;
-        letter-spacing: 0.22em;
+        font-weight: 600;
+        letter-spacing: 0.35em;
         text-transform: uppercase;
         color: #3d3a35;
       }
@@ -200,8 +224,10 @@
     </style>
   </head>
   <body>
+    <img class="sun" src="../src/assets/images/hero/sun.png" alt="" />
+
     <div class="sky">
-      <img src="../src/assets/images/hero-espacio.png" alt="" />
+      <img class="moon" src="../src/assets/images/hero/moon.png" alt="" />
     </div>
 
     <div class="content">
