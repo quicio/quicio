@@ -24,7 +24,7 @@ Quicio no es una agencia, una startup ni una empresa de servicios tecnológicos.
 
 ## Operating Context
 
-- El ecosistema vive en la organización de GitHub `quicio` y en sitios propios: `semina.quicio.qzz.io`, `kndl.quicio.qzz.io/rizoma/`, `quicio.github.io/intersticio/`, entre otros.
+- El ecosistema vive en la organización de GitHub `quicio` y en sitios propios: `semina.quicio.qzz.io`, `rizoma.quicio.org/`, `quicio.github.io/intersticio/`, entre otros.
 - Cada proyecto conserva su repositorio y su página; Quicio presenta fichas editoriales y enlaza al proyecto, sin duplicar su producto ni su documentación.
 - El contenido institucional se edita en Markdown dentro de `src/content/`; los datos de navegación y SEO viven en `src/data/`.
 - El sitio se publica en GitHub Pages con el dominio canónico `quicio.org`.
@@ -57,7 +57,7 @@ Quicio no es una agencia, una startup ni una empresa de servicios tecnológicos.
 ## Evidence on Hand
 
 - Repositorios reales y descripciones verificables en `github.com/quicio`.
-- Sitios reales: Semina (`semina.quicio.qzz.io`), Rizoma (`kndl.quicio.qzz.io/rizoma/`), Intersticio (`quicio.github.io/intersticio/`), Candil, Cátodo, Espiral, Nacre y Paramétrica en GitHub Pages.
+- Sitios reales: Semina (`semina.quicio.qzz.io`), Rizoma (`rizoma.quicio.org/`), Intersticio (`quicio.github.io/intersticio/`), Candil, Cátodo, Espiral, Nacre y Paramétrica en GitHub Pages.
 - Sitio anterior de la organización: `quicio/quicio.github.io`, una página única oscura de 2026; se conserva como antecedente en el Archivo.
 - Brief de identidad y arquitectura del ecosistema entregado por el fundador.
 - Relato histórico de Quicio: prometido por el fundador; no inventar fechas, hitos ni proyectos para llenar el Archivo.

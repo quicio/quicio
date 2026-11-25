@@ -11,7 +11,7 @@ disciplines:
 status: En desarrollo
 year: "2026"
 relation: Proyecto independiente de Semina. Comparten materiales y referencias, pero conservan modelos de dominio y experiencias de usuario distintas.
-link: https://kndl.quicio.qzz.io/rizoma/
+link: https://rizoma.quicio.org/
 linkLabel: Abrir Rizoma
 repo: https://github.com/quicio/rizoma
 plate: rizoma
